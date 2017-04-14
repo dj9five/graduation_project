@@ -1,16 +1,12 @@
 package com.me.crm.domain;
 
-
-
-
-
-
 /**
+ * po对象,jsp页面的值保存到vo对象，vo对象将值拷给po对象，po对象将值写入数据库
  * Created by DJ on 2017/3/27.
  */
 
 
-public class SysUserGroup {
+public class SysUserGroup implements java.io.Serializable {
  /*
  `id` INTEGER(11) NOT NULL AUTO_INCREMENT,               #编号
   `remark` TEXT,                                          #备注

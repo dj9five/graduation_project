@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!-- 配置请求的后缀名do-->
+    <constant name="struts.action.extension" value="do"/>
+
+    <!-- 配置主题为简单主题-->
+    <constant name="struts.ui.theme" value="simple"/>
+
+    <!-- 配置struts模式为开发者模式-->
+    <constant name="struts.devMode" value="true"/>
+
+    <package name="sys" namespace="/sys" extends="struts-default">
+        <action name="sysUserGroupAction_*" class="com.me.crm.web.action.SysUserGroupAction" method="{1}">
+            <result name="add">/sys/group/add.jsp</result>
+        </action>
+    </package>
+</struts>
