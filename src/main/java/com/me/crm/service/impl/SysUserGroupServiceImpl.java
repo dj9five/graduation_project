@@ -1,5 +1,6 @@
 package com.me.crm.service.impl;
 
+import com.me.bean.SysUserGroupSearch;
 import com.me.crm.dao.ISysUserGroupDao;
 import com.me.crm.domain.SysUserGroup;
 import com.me.crm.service.ISysUserGroupService;
@@ -29,28 +30,39 @@ public class SysUserGroupServiceImpl implements ISysUserGroupService {
 
     }
 
-    public List<SysUserGroup> findSysUserGroups(String name, String principal) {
-
-        name = "企业应用部";
-        principal = "段捷";
+    public List<SysUserGroup> findSysUserGroups(SysUserGroupSearch sysUserGroupSearch) {
+        if (sysUserGroupSearch==null)
+        {
+            throw new RuntimeException("查询部门对象为空");
+        }
+        //组织查询条件
         String whereHql = "";
-        List paramsList = new ArrayList();
-        if (org.apache.commons.lang.StringUtils.isNotBlank(name)) {
-            whereHql = "and o.name LIKE ? ";
-            paramsList.add("%" + name + "%");
+        //定义封装查询条件的List
+        List paramList = new ArrayList();
+        if (StringUtils.isNotBlank(sysUserGroupSearch.getName())){
+            whereHql=" and o.name like ?";
+            paramList.add("%"+sysUserGroupSearch.getName().trim()+"%");
         }
-        if (StringUtils.isNotBlank(principal)) {
-            whereHql = whereHql + "and o.principal = ?";
-            paramsList.add(principal);
-        }
-        Object[] params = paramsList.toArray();
-        System.out.println("whereHql  " + whereHql);
-        //组织排序
+        Object[] params = paramList.toArray();
+        //排序
         LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
-        orderby.put("o.id", "asc");
-        orderby.put("o.name", "desc");
-        List<SysUserGroup> list = sysUserGroupDao.findObjectsByConditionWithNoPage(whereHql, params, orderby);
-        return list;
+        orderby.put("o.id","asc");
+        return sysUserGroupDao.findObjectsByConditionWithNoPage(whereHql, params, orderby);
     }
+
+    public SysUserGroup findSysUserGroupById(Integer id) {
+
+        return sysUserGroupDao.findObjectById(id);
+    }
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateSysUserGroup(SysUserGroup sysUserGroup) {
+        sysUserGroupDao.update(sysUserGroup);
+
+    }
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void deleteSysUserGroupByIds(Integer[] ids) {
+        sysUserGroupDao.deleteById(ids);
+    }
+
 
 }

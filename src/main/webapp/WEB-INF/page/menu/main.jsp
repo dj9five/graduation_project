@@ -10,8 +10,7 @@
            noresize="noresize" frameborder="0">
     <frameset cols="220,*" id="frmstOuter">
         <frame src="${pageContext.request.contextPath}/sys/menuAction_left.do" name="leftFrame" id="leftFrame"
-               scrolling="auto"
-        " frameborder="0" framespacing="1px" bordercolor="#4faad8">
+               scrolling="auto""  frameborder="0" framespacing="1px" bordercolor="#4faad8">
         <frame src="" name="rightFrame" id="rightFrame">
     </frameset>
 </frameset>

@@ -15,8 +15,18 @@
     <constant name="struts.devMode" value="true"/>
 
     <package name="sys" namespace="/sys" extends="struts-default">
+        <action name="menuAction_*" class="com.me.crm.web.action.menuAction" method="{1}">
+            <result name="top">/WEB-INF/page/menu/top.jsp</result>
+            <result name="left">/WEB-INF/page/menu/left.jsp</result>
+        </action>
         <action name="sysUserGroupAction_*" class="com.me.crm.web.action.SysUserGroupAction" method="{1}">
-            <result name="add">/sys/group/add.jsp</result>
+            <result name="add">/WEB-INF/sys/group/add.jsp</result>
+            <result name="list">/WEB-INF/sys/group/list.jsp</result>
+            <result name="edit">/WEB-INF/sys/group/edit.jsp</result>
+            <result name="listAction" type="redirectAction">
+                <param name="actionName">sysUserGroupAction_list</param>
+                <param name="namespace">/sys</param>
+            </result>
         </action>
     </package>
 </struts>

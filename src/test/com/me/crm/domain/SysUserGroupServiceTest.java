@@ -1,14 +1,8 @@
 package com.me.crm.domain;
 
-import com.me.crm.container.ServiceProvider;
-import com.me.crm.service.ISysUserGroupService;
-import org.junit.Test;
-
-import java.util.List;
-
 /**
  * Created by DJ on 2017/4/11.
- */
+
 public class SysUserGroupServiceTest {
     @Test
     public void testSave() {
@@ -25,6 +19,7 @@ public class SysUserGroupServiceTest {
 
     }
 
+
     @Test
     public void findObjectsByConditionWithNoPage() {
         ISysUserGroupService sysUserGroupService = (ISysUserGroupService) ServiceProvider.getService(ISysUserGroupService.SERVICE_NAME);
@@ -35,7 +30,7 @@ public class SysUserGroupServiceTest {
         List<SysUserGroup> list = sysUserGroupService.findSysUserGroups(name, principal);
     }
 }
-/*
+
 public class SysUserGroupServiceTest {
     @Test
     public void testSave(){
