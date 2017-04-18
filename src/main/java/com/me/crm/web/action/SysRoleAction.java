@@ -1,5 +1,6 @@
 package com.me.crm.web.action;
 
+import com.me.bean.SysRoleSearch;
 import com.me.crm.container.ServiceProvider;
 import com.me.crm.domain.SysRole;
 import com.me.crm.service.ISysRoleService;
@@ -8,6 +9,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Created by DJ on 2017/4/18.
@@ -27,7 +29,14 @@ public class SysRoleAction extends BaseAction implements ModelDriven<SysRoleFrom
         return "listAction";
     }
 
+    /*
+        查询权限组信息
+         */
     public String list() {
+        SysRoleSearch sysRoleSearch = new SysRoleSearch();
+        sysRoleSearch.setName(sysRoleFrom.getName());
+        List<SysRole> sysRoles = sysRoleService.findSysRoles(sysRoleSearch);
+        request.setAttribute("sysRoles", sysRoles);
         return "list";
     }
 
@@ -38,4 +47,6 @@ public class SysRoleAction extends BaseAction implements ModelDriven<SysRoleFrom
     public SysRoleFrom getModel() {
         return sysRoleFrom;
     }
+
+
 }

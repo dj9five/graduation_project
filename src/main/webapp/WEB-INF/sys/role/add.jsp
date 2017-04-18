@@ -44,13 +44,17 @@
 			</tr>			
 			<tr>
 				<td class="red">名称</td>
-				<td><input name="name" type="text" class="input" id="name" style="width:90%"></td>
+				<td><input name="name" type="text" class="input" id="name" style="width:90%">
+				<s:textfield name="name" cssClass="input" id="name" cssStyle="width:90%">
+                </td>
+
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td height="40" valign="top">备注</td>
-				<td colspan="3"><textarea name="remark" rows="3" id="remark" style="width:96%"></textarea></td>
+				<s:textarea name="remark" rows="3" id="remark" cssStyle="width:96%"/>
+				</td>
 			</tr>
   		</table>
 		</div>

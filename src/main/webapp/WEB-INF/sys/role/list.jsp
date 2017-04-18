@@ -1,4 +1,5 @@
 <%@ page language="java"  pageEncoding="UTF-8" contentType="text/html; charset=utf-8"%>
+<%@taglib  uri="/struts-tags" prefix="s"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -44,11 +45,11 @@ function setMenu(id) {
   </tr>
   <tr>
 	  <td colspan="2">
-<form name="searchForm" method="post" action="${pageContext.request.contextPath}/sys/sysRoleAction_list.do">
+<s:form name="searchForm" method="post" action="sysRoleAction_list.do" namespace="/sys">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" name="base" id="base">
 	<tr>
     	<td width="38%" nowrap>名称：
-			<input name="name" type="text" id="name" value="" style="width:140px">
+			<s:textfield name="name"  id="name"  cssStyle="width:140px"/>
     	</td>
   	    <td width="39%" nowrap>&nbsp;</td>
   	    <td width="23%" align="center">
@@ -61,7 +62,7 @@ function setMenu(id) {
 		</td>
 	</tr>
 </table>
-</form>
+</s:form>
 	  </td>
   </tr>
 </table>
@@ -77,7 +78,7 @@ function setMenu(id) {
 </div>
 <!-- list -->
 <div class="border">
-<form name="ActionForm" method="post" action="${pageContext.request.contextPath}/sys/sysRoleAction_delete.do">
+<s:form name="ActionForm" method="post" action="sysRoleAction_delete.do" namespace="/sys">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="PowerTable" class="PowerTable">
 	<!-- title -->
 	<tr>
@@ -87,18 +88,21 @@ function setMenu(id) {
   	    <td width="27%" class="listViewThS1">可访问菜单</td>
         <td width="28%" class="listViewThS1">可进行的操作</td>
 	</tr>
-	<!-- data -->
+	<s:if test="%{#request.sysRoles!=null }">
+		<s:iterator value="%{#request.sysRoles}" var="sysRole">
 	<tr>
     	<td>
-    	  <input type="checkbox" name="ids" value="2" class="checkbox" onClick="changeCheckCount();">
+			<s:checkbox name="ids" fieldValue="%{#sysRole.id}" cssClass="checkbox" onclick="changeCheckCount();"/>
 		</td>
   	    <td><a href="${pageContext.request.contextPath}/sys/sysRoleAction_edit.do">
-		销售部操作权限</a></td>
+		<s:property value="%{#sysRole.name}"/></a></td>
 		<td><a href="#" onClick="setMenu('aaaaaa')">设置</a></td>
 		<td><a href="#" onClick="setPopedom('aaaaaa')">设置</a></td>
 	</tr>
+		</s:iterator>
+	</s:if>
 </table>
-</form>
+</s:form>
 </div>
 </body>
 <script type="text/javascript">
