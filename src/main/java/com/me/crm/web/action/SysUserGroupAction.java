@@ -23,7 +23,6 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
 
     public String save() throws IllegalAccessException, InvocationTargetException, NullPointerException {
 
-        System.out.print("姓名" + sysUserGroupForm.getName());
         //实例化Po对象
         SysUserGroup sysUserGroup = new SysUserGroup();
         //将vo对象的值赋给po对象

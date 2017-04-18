@@ -20,7 +20,7 @@
         <datasource-map>
           <unit-entry name="com:me:crm:domain:hibernate.cfg.xml" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
           <unit-entry name="hibernate.cfg.xml" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
-          <unit-entry name="sessionFactory" />
+          <unit-entry name="sessionFactory" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/java/hibernate.cfg.xml" />

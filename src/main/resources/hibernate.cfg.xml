@@ -17,5 +17,6 @@
     <property name="hibernate.validator.apply_to_ddl">false</property>
     <property name="hibernate.validator.autoregister_listeners">false</property>
     <mapping resource="com/me/crm/domain/SysUserGroup.hbm.xml"/>
+    <mapping resource="com/me/crm/domain/SysRole.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -15,16 +15,30 @@
     <constant name="struts.devMode" value="true"/>
 
     <package name="sys" namespace="/sys" extends="struts-default">
+        <!-- 菜单top，let显示的配置-->
         <action name="menuAction_*" class="com.me.crm.web.action.menuAction" method="{1}">
             <result name="top">/WEB-INF/page/menu/top.jsp</result>
             <result name="left">/WEB-INF/page/menu/left.jsp</result>
         </action>
+
+        <!-- 用户部门路径配置-->
         <action name="sysUserGroupAction_*" class="com.me.crm.web.action.SysUserGroupAction" method="{1}">
             <result name="add">/WEB-INF/sys/group/add.jsp</result>
             <result name="list">/WEB-INF/sys/group/list.jsp</result>
             <result name="edit">/WEB-INF/sys/group/edit.jsp</result>
             <result name="listAction" type="redirectAction">
                 <param name="actionName">sysUserGroupAction_list</param>
+                <param name="namespace">/sys</param>
+            </result>
+        </action>
+
+        <!-- 权限操作路径配置-->
+        <action name="sysRoleAction_*" class="com.me.crm.web.action.SysRoleAction" method="{1}">
+            <result name="add">/WEB-INF/sys/role/add.jsp</result>
+            <result name="list">/WEB-INF/sys/role/list.jsp</result>
+            <result name="edit">/WEB-INF/sys/role/edit.jsp</result>
+            <result name="listAction" type="redirectAction">
+                <param name="actionName">sysRoleAction_list</param>
                 <param name="namespace">/sys</param>
             </result>
         </action>
