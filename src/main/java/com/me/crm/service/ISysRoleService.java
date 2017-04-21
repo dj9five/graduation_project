@@ -14,4 +14,10 @@ public interface ISysRoleService {
     void saveSysRole(SysRole sysRole);
 
     List<SysRole> findSysRoles(SysRoleSearch sysRoleSearch);
+
+    SysRole findSysRoleById(String id);
+
+    void updateSysRole(SysRole sysRole);
+
+    void deleteSysRoleById(String[] ids);
 }

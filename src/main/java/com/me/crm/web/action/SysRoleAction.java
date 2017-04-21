@@ -40,8 +40,40 @@ public class SysRoleAction extends BaseAction implements ModelDriven<SysRoleFrom
         return "list";
     }
 
+    public String update() throws InvocationTargetException, IllegalAccessException {
+        //实例化po对象
+        SysRole sysRole = new SysRole();
+        //vo给po赋值
+        BeanUtils.copyProperties(sysRole, sysRoleFrom);
+        //调用权限组的业务层
+        sysRoleService.updateSysRole(sysRole);
+        return "listAction";
+    }
+
     public String add() {
         return "add";
+    }
+
+    public String edit() throws InvocationTargetException, IllegalAccessException {
+        //获取权限组id
+        String id = request.getParameter("id");
+        //根据权限组id查询权限组信息
+        SysRole sysRole = sysRoleService.findSysRoleById(id);
+        //放置权限组对象的值到模型驱动对象中
+        BeanUtils.copyProperties(sysRoleFrom, sysRole);
+
+        return "edit";
+    }
+
+    public String delete() throws InvocationTargetException, IllegalAccessException {
+       //获取删除权限组的id
+        String[] ids=request.getParameterValues("ids");
+        if (ids!=null&&ids.length>0){
+            //调用业务组的权限删除
+            sysRoleService.deleteSysRoleById(ids);
+            return "listAction";
+        }
+        return null;
     }
 
     public SysRoleFrom getModel() {

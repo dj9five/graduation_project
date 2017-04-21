@@ -23,6 +23,7 @@ import java.util.List;
 public class SysRoleServiceImpl implements ISysRoleService {
     @Resource(name = ISysRoleDao.SERVICE_NAME)
     private ISysRoleDao sysRoleDao;
+
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
     public void saveSysRole(SysRole sysRole) {
         sysRoleDao.save(sysRole);
@@ -30,18 +31,32 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     public List<SysRole> findSysRoles(SysRoleSearch sysRoleSearch) {
-        if (sysRoleSearch==null){
-            throw new  RuntimeException("传递的参数为空");
+        if (sysRoleSearch == null) {
+            throw new RuntimeException("传递的参数为空");
         }
-        String whereHql="";
-        List paramList=new ArrayList();
-        if (StringUtils.isNotBlank(sysRoleSearch.getName())){
-            whereHql=" and o.name like ?";
-            paramList.add("%"+sysRoleSearch.getName().trim()+"%");
+        String whereHql = "";
+        List paramList = new ArrayList();
+        if (StringUtils.isNotBlank(sysRoleSearch.getName())) {
+            whereHql = " and o.name like ?";
+            paramList.add("%" + sysRoleSearch.getName().trim() + "%");
         }
-        Object[] params=paramList.toArray();
-        LinkedHashMap<String,String> orderby=new LinkedHashMap<String, String>();
-        orderby.put("o.id","asc");
-        return sysRoleDao.findObjectsByConditionWithNoPage(whereHql,params,orderby);
+        Object[] params = paramList.toArray();
+        LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+        orderby.put("o.id", "asc");
+        return sysRoleDao.findObjectsByConditionWithNoPage(whereHql, params, orderby);
+    }
+
+    public SysRole findSysRoleById(String id) {
+        return sysRoleDao.findObjectById(id);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateSysRole(SysRole sysRole) {
+        sysRoleDao.update(sysRole);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void deleteSysRoleById(String[] ids) {
+        sysRoleDao.deleteById(ids);
     }
 }

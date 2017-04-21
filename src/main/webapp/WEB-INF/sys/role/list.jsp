@@ -94,7 +94,7 @@ function setMenu(id) {
     	<td>
 			<s:checkbox name="ids" fieldValue="%{#sysRole.id}" cssClass="checkbox" onclick="changeCheckCount();"/>
 		</td>
-  	    <td><a href="${pageContext.request.contextPath}/sys/sysRoleAction_edit.do">
+  	    <td><a href="${pageContext.request.contextPath}/sys/sysRoleAction_edit.do?id=<s:property value="%{#sysRole.id}"/>">
 		<s:property value="%{#sysRole.name}"/></a></td>
 		<td><a href="#" onClick="setMenu('aaaaaa')">设置</a></td>
 		<td><a href="#" onClick="setPopedom('aaaaaa')">设置</a></td>
