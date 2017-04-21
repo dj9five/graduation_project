@@ -42,5 +42,17 @@
                 <param name="namespace">/sys</param>
             </result>
         </action>
+        <!-- 人事路径配置-->
+        <action name="sysUserAction_*" class="com.me.crm.web.action.SysUserAction" method="{1}">
+            <result name="main">/WEB-INF/page/menu/main.jsp</result>
+            <result name="login">/WEB-INF/sys/login.jsp</result>
+            <result name="add">/WEB-INF/sys/user/add.jsp</result>
+            <result name="list">/WEB-INF/sys/user/list.jsp</result>
+            <result name="edit">/WEB-INF/sys/user/edit.jsp</result>
+            <result name="listAction" type="redirectAction">
+                <param name="actionName">sysUserAction_list</param>
+                <param name="namespace">/sys</param>
+            </result>
+        </action>
     </package>
 </struts>

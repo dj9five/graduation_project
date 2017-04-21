@@ -43,10 +43,10 @@
                 alert("登陆的密码不能为空");
                 return false;
             }
-            /*if($("#checkNum").val().length<=0){
+            if($("#checkNum").val().length<=0){
              alert("验证码不能为空");
              return false;
-             }*/
+             }
             document.forms[0].submit();
         }
     </script>

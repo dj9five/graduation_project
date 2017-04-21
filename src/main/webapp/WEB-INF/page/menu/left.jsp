@@ -44,7 +44,7 @@
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/bmsz.png" width="17" height="17">
 						           <a href="${pageContext.request.contextPath}/sys/sysUserGroupAction_list.do" target="rightFrame" style="color: #040205">部门设置</a></li>
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/rsgl.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/sys/user/list.jsp" target="rightFrame" style="color: #040205">人事管理</a></li>
+						           <a href="${pageContext.request.contextPath}/sys/sysUserAction_list.do" target="rightFrame" style="color: #040205">人事管理</a></li>
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/czqxz.png" width="17" height="17">
 						           <a href="${pageContext.request.contextPath}/sys/sysRoleAction_list.do" target="rightFrame" style="color: #040205">操作权限组</a></li>
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/sfzl.png" width="17" height="17">
