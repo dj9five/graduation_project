@@ -59,4 +59,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public void deleteSysRoleById(String[] ids) {
         sysRoleDao.deleteById(ids);
     }
+
+    public List<SysRole> findAllSysRole() {
+        LinkedHashMap<String,String> orderby=new LinkedHashMap<String, String>();
+        orderby.put("o.id","asc");
+        return sysRoleDao.findObjectsByConditionWithNoPage(orderby);
+    }
 }

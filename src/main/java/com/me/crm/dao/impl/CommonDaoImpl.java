@@ -90,6 +90,18 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
         return list;
     }
 
+    public List<T> findObjectsByConditionWithNoPage(String whereHql, Object[] params) {
+        return this.findObjectsByConditionWithNoPage(whereHql, params, null);
+    }
+
+    public List<T> findObjectsByConditionWithNoPage() {
+        return this.findObjectsByConditionWithNoPage(null, null, null);
+    }
+
+    public List<T> findObjectsByConditionWithNoPage(LinkedHashMap<String, String> orderby) {
+        return this.findObjectsByConditionWithNoPage(null, null, orderby);
+    }
+
     public void setParams(Query query, Object[] params) {
         if (params != null && params.length > 0) {
             for (int i = 0; i < params.length; i++) {

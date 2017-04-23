@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository(ISysRoleDao.SERVICE_NAME)
 public interface ISysRoleDao extends ICommonDao<SysRole> {
     public final static String SERVICE_NAME = "com.me.crm.dao.impl.SysRoleDaoImpl";
+
+
 }

@@ -20,4 +20,10 @@ public interface ICommonDao<T> {
     void deleteALLObject(Collection<T> entities);
 
     List<T> findObjectsByConditionWithNoPage(String whereHql, Object[] params, LinkedHashMap<String, String> orderby);
+
+    List<T> findObjectsByConditionWithNoPage(String whereHql, Object[] name);
+
+    List<T> findObjectsByConditionWithNoPage();
+
+    List<T> findObjectsByConditionWithNoPage(LinkedHashMap<String, String> orderby);
 }

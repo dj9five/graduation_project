@@ -64,5 +64,12 @@ public class SysUserGroupServiceImpl implements ISysUserGroupService {
         sysUserGroupDao.deleteById(ids);
     }
 
+    public List<SysUserGroup> findAllSysUserGroup() {
+        //排序
+        LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+        orderby.put("o.id","asc");
+        return sysUserGroupDao.findObjectsByConditionWithNoPage(orderby);
+    }
+
 
 }

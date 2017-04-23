@@ -1,5 +1,6 @@
 package com.me.crm.util;
 
+import com.me.crm.domain.SysUser;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,5 +25,22 @@ public class SessionUtils {
         }
         return check_number_key.equalsIgnoreCase(saved);
     }
+/*
+* 保存用户当前登录信息到session中*/
+    public static void setSysUserToSession(HttpServletRequest request, SysUser sysUser) {
+        HttpSession session =request.getSession();
+        if (sysUser==null){
+            return;
+        }
+        session.setAttribute("sysUserKey",sysUser);
+    }
 
+    public static SysUser getSysUserFromSession(HttpServletRequest request) {
+        HttpSession session=request.getSession(false);
+        if (session==null){
+            return  null;
+        }
+        SysUser sysUser=(SysUser)session.getAttribute("sysUserKey");
+        return sysUser;
+    }
 }

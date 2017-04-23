@@ -20,5 +20,7 @@ public interface ISysUserGroupService {
 //通过id批量删除部门
     void deleteSysUserGroupByIds(Integer[] ids);
 
+    List<SysUserGroup> findAllSysUserGroup();
+
     //List<SysUserGroup> findSysUserGroups(String name, String principal);
 }

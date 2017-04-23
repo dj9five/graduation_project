@@ -144,7 +144,7 @@
 				<td class="red">状态：</td>
 				<td>
 				<s:radio list="#{'Y':'启用','N':'停用'}"  name="status" id="status"  
-				         listKey="key" listValue="value" value="%{'Y'}"/>
+				         listKey="key" listValue="value"/>
 				</td>
 			</tr>
   		</table>

@@ -20,4 +20,6 @@ public interface ISysRoleService {
     void updateSysRole(SysRole sysRole);
 
     void deleteSysRoleById(String[] ids);
+
+    List<SysRole> findAllSysRole();
 }
