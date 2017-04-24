@@ -19,7 +19,7 @@
 </script>
 <script language="javascript">
 function setPopedom(id) {
-	OpenWin('${pageContext.request.contextPath}/sysPopedomAction.do?method=view&roleId='+id,'',800,600);
+	OpenWin('${pageContext.request.contextPath}/sys/sysRoleAction_listPopedom.do?roleId='+id,'',800,600);
 }
 function setMenu(id) {
 	OpenWin('${pageContext.request.contextPath}/sysMenuAction.do?method=view&roleId='+id,'',800,600);
@@ -96,8 +96,8 @@ function setMenu(id) {
 		</td>
   	    <td><a href="${pageContext.request.contextPath}/sys/sysRoleAction_edit.do?id=<s:property value="%{#sysRole.id}"/>">
 		<s:property value="%{#sysRole.name}"/></a></td>
-		<td><a href="#" onClick="setMenu('aaaaaa')">设置</a></td>
-		<td><a href="#" onClick="setPopedom('aaaaaa')">设置</a></td>
+		<td><a href="#" onClick="setMenu('<s:property value="%{#sysRole.id}"/>')">设置</a></td>
+		<td><a href="#" onClick="setPopedom('<s:property value="%{#sysRole.id}"/>')">设置</a></td>
 	</tr>
 		</s:iterator>
 	</s:if>

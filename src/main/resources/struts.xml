@@ -41,6 +41,12 @@
                 <param name="actionName">sysRoleAction_list</param>
                 <param name="namespace">/sys</param>
             </result>
+            <result name="listPopedom">/WEB-INF/sys/role/popedom/view.jsp</result>
+            <!-- 转发到action-->
+            <result name="updatePopedom" type="chain">
+                <param name="actionName">sysRoleAction_listPopedom</param>
+                <param name="namespace">/sys</param>
+            </result>
         </action>
         <!-- 人事路径配置-->
         <action name="sysUserAction_*" class="com.me.crm.web.action.SysUserAction" method="{1}">

@@ -19,8 +19,8 @@
       <configuration>
         <datasource-map>
           <unit-entry name="com:me:crm:domain:hibernate.cfg.xml" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
-          <unit-entry name="hibernate.cfg.xml" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
-          <unit-entry name="sessionFactory" value="a582566e-665b-4505-addc-d4c7ab4c2888" />
+          <unit-entry name="hibernate.cfg.xml" value="623e74d7-1142-4cfd-bcbe-2c0428a35105" />
+          <unit-entry name="sessionFactory" value="623e74d7-1142-4cfd-bcbe-2c0428a35105" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/java/hibernate.cfg.xml" />
@@ -106,5 +106,7 @@
     <orderEntry type="library" name="Maven: javax.servlet.jsp:jsp-api:2.2.1-b03" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:c3p0:0.9.5.2" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:mchange-commons-java:0.2.11" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" name="Maven: taglibs:standard:1.1.2" level="project" />
   </component>
 </module>

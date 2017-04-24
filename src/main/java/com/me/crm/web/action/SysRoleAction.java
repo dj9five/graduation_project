@@ -2,7 +2,10 @@ package com.me.crm.web.action;
 
 import com.me.bean.SysRoleSearch;
 import com.me.crm.container.ServiceProvider;
+import com.me.crm.domain.SysPopedom;
 import com.me.crm.domain.SysRole;
+import com.me.crm.service.ISysPopedomPrivilegeService;
+import com.me.crm.service.ISysPopedomService;
 import com.me.crm.service.ISysRoleService;
 import com.me.crm.web.form.SysRoleFrom;
 import com.opensymphony.xwork2.ModelDriven;
@@ -17,7 +20,39 @@ import java.util.List;
 public class SysRoleAction extends BaseAction implements ModelDriven<SysRoleFrom> {
     private SysRoleFrom sysRoleFrom = new SysRoleFrom();
     //获取权限组的业务层对象
-    private ISysRoleService sysRoleService = (ISysRoleService) ServiceProvider.getService(ISysRoleService.SERVICE_NAME);
+    private ISysRoleService sysRoleService =
+            (ISysRoleService) ServiceProvider.getService(ISysRoleService.SERVICE_NAME);
+    //获取操作功能的业务层
+    private ISysPopedomService sysPopedomService =
+            (ISysPopedomService) ServiceProvider.getService(ISysPopedomService.SERVICE_NAME);
+    //获取操作权限表的业务层
+    private ISysPopedomPrivilegeService sysPopedomPrivilegeService =
+            (ISysPopedomPrivilegeService) ServiceProvider.getService(ISysPopedomPrivilegeService.SERVICE_NAME);
+
+    public String updatePopedom() {
+        //获取角色id
+        String roleId = request.getParameter("roleId");
+        SysRole sysRole = sysRoleService.findSysRoleById(roleId);
+        request.setAttribute("sysRole", sysRole);
+        //获取复选框的值
+        String[] popedomModules = request.getParameterValues("popedomModule");
+        sysPopedomPrivilegeService.updatePopedom(roleId,popedomModules);
+
+        return "updatePopedom";
+    }
+
+    /*
+    * 显示系统的所有操作功能*/
+    public String listPopedom() {
+        //获取角色id
+        String roleId = request.getParameter("roleId");
+        SysRole sysRole = sysRoleService.findSysRoleById(roleId);
+        request.setAttribute("sysRole", sysRole);
+        //获取系统的所有功能
+        List<SysPopedom> sysPopedoms = sysPopedomService.findAllSysPopedom();
+        request.setAttribute("sysPopedoms", sysPopedoms);
+        return "listPopedom";
+    }
 
     public String save() throws InvocationTargetException, IllegalAccessException {
         //实例化po对象
@@ -66,9 +101,9 @@ public class SysRoleAction extends BaseAction implements ModelDriven<SysRoleFrom
     }
 
     public String delete() throws InvocationTargetException, IllegalAccessException {
-       //获取删除权限组的id
-        String[] ids=request.getParameterValues("ids");
-        if (ids!=null&&ids.length>0){
+        //获取删除权限组的id
+        String[] ids = request.getParameterValues("ids");
+        if (ids != null && ids.length > 0) {
             //调用业务组的权限删除
             sysRoleService.deleteSysRoleById(ids);
             return "listAction";
