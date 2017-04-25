@@ -1,5 +1,6 @@
 package com.me.crm.web.action;
 
+import com.me.annotation.Limit;
 import com.me.bean.SysUserGroupSearch;
 import com.me.crm.container.ServiceProvider;
 import com.me.crm.domain.SysUserGroup;
@@ -21,6 +22,7 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
     private ISysUserGroupService sysUserGroupService = (ISysUserGroupService) ServiceProvider.getService(ISysUserGroupService.SERVICE_NAME);
     private SysUserGroupForm sysUserGroupForm = new SysUserGroupForm();
 
+    @Limit(module = "group", privilege = "save")
     public String save() throws IllegalAccessException, InvocationTargetException, NullPointerException {
 
         //实例化Po对象
@@ -35,6 +37,7 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
         return "listAction";
     }
 
+    @Limit(module = "group", privilege = "update")
     public String update() throws IllegalAccessException, InvocationTargetException, NullPointerException {
         //实例化Po对象
         SysUserGroup sysUserGroup = new SysUserGroup();
@@ -46,6 +49,7 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
         return "listAction";
     }
 
+    @Limit(module = "group", privilege = "list")
     public String list() {
         SysUserGroupSearch sysUserGroupSearch = new SysUserGroupSearch();
         sysUserGroupSearch.setName(sysUserGroupForm.getName());
@@ -55,6 +59,7 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
         return "list";
     }
 
+    @Limit(module = "group", privilege = "edit")
     public String edit() throws InvocationTargetException, IllegalAccessException {
         //获取部门id
         String sid = sysUserGroupForm.getId();
@@ -64,22 +69,26 @@ public class SysUserGroupAction extends BaseAction implements ModelDriven<SysUse
             //调用业务层的方法，通过部门id查询部门信息
             SysUserGroup sysUserGroup = sysUserGroupService.findSysUserGroupById(id);
             //处理部门编辑页面，显示要编辑的信息
-            BeanUtils.copyProperties(sysUserGroupForm,sysUserGroup);
+            BeanUtils.copyProperties(sysUserGroupForm, sysUserGroup);
             return "edit";
         }
         return null;
     }
+
     //删除
-public String delete(){
-        String[] sids=request.getParameterValues("ids");
-    Integer ids[] =DataType.converterStringArray2IntegerArray(sids);
-    if (ids!=null){
-        sysUserGroupService.deleteSysUserGroupByIds(ids);
-        return "listAction";
+    @Limit(module = "group", privilege = "delete")
+    public String delete() {
+        String[] sids = request.getParameterValues("ids");
+        Integer ids[] = DataType.converterStringArray2IntegerArray(sids);
+        if (ids != null) {
+            sysUserGroupService.deleteSysUserGroupByIds(ids);
+            return "listAction";
+        }
+        return null;
     }
-    return null;
-}
-//新建
+
+    //新建
+    @Limit(module = "group", privilege = "add")
     public String add() {
         return "add";
     }

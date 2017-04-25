@@ -1,5 +1,6 @@
 package com.me.crm.web.action;
 
+import com.me.annotation.Limit;
 import com.me.bean.SysUserSearch;
 import com.me.crm.container.ServiceProvider;
 import com.me.crm.domain.SysRole;
@@ -44,6 +45,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
     /*
     * 显示用户查询页面
     * */
+    @Limit(module="user",privilege="list")
     public String list() throws InvocationTargetException, IllegalAccessException {
         //处理所选部门的下拉框
         List<SysUserGroup> sysUserGroupSelect = sysUserGroupService.findAllSysUserGroup();
@@ -57,6 +59,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
     }
 
     //删除
+    @Limit(module="user",privilege="delete")
     public String delete() {
         String[] sids = request.getParameterValues("ids");
         Integer ids[] = DataType.converterStringArray2IntegerArray(sids);
@@ -90,6 +93,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
     }
 
     //编辑
+    @Limit(module = "user", privilege = "edit")
     public String edit() throws InvocationTargetException, IllegalAccessException {
         //处理权限组下拉选
         List<SysRole> sysRoleSelect = sysRoleService.findAllSysRole();
@@ -118,7 +122,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
     /*
     * 显示用户添加页面
     * */
-
+    @Limit(module = "user", privilege = "add")
     public String add() {
         //处理权限组下拉选
         List<SysRole> sysRoleSelect = sysRoleService.findAllSysRole();
@@ -142,6 +146,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
         sysUserForm.setUpdateTime(curDate);
         return "add";
     }
+    @Limit(module = "user", privilege = "update")
     public String update() throws InvocationTargetException, IllegalAccessException {
         SysUser newSysUser = new SysUser();
         //注册转换器
@@ -170,6 +175,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
 
     /*
     * 人事保存*/
+    @Limit(module = "user", privilege = "save")
     public String save() throws InvocationTargetException, IllegalAccessException {
         SysUser sysUser = new SysUser();
         //注册转换器
@@ -192,6 +198,7 @@ public class SysUserAction extends BaseAction implements ModelDriven<SysUserForm
     }
 
     //验证用户登录
+
     public String isLogin() throws UnsupportedEncodingException {
         //处理验证码
         boolean flag = SessionUtils.isCheckNum(request);

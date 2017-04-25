@@ -15,6 +15,20 @@
     <constant name="struts.devMode" value="true"/>
 
     <package name="sys" namespace="/sys" extends="struts-default">
+        <interceptors>
+            <interceptor name="limitInterceptor" class="com.me.crm.interceptor.LimitInterceptor"/>
+            <interceptor-stack name="limitStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="limitInterceptor">
+                    <param name="excludeMethods">isLogin,top,left</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <!--struts运行时，执行的拦截器栈 -->
+        <default-interceptor-ref name="limitStack"/>
+        <global-results>
+            <result name="popmsg_popedom">/WEB-INF/sys/popmsg_popedom.jsp</result>
+        </global-results>
         <!-- 菜单top，let显示的配置-->
         <action name="menuAction_*" class="com.me.crm.web.action.menuAction" method="{1}">
             <result name="top">/WEB-INF/page/menu/top.jsp</result>
@@ -59,6 +73,7 @@
                 <param name="actionName">sysUserAction_list</param>
                 <param name="namespace">/sys</param>
             </result>
+            <result name="popmsg_popedom">/WEB-INF/sys/popmsg_popedom.jsp</result>
         </action>
     </package>
 </struts>

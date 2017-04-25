@@ -108,19 +108,36 @@
                         <c:forEach items="${requestScope.sysPopedoms}" var="sysPopedomSup">
                             <c:if test="${sysPopedomSup.id.popedomModule==sysPopedomSup.id.popedomPrivilege}">
                                 <fieldset style='padding:5px;clear:left;'>
-                                    <legend><input type='checkbox' class='checkbox' name='popedomModule'
+                                    <c:forEach items="${requestScope.sysPopedomPrivileges}" var="sysPopedomPrivilege">
+                                        <c:if test="${sysPopedomSup.id.popedomModule==sysPopedomPrivilege.id.popedomModule&&sysPopedomSup.id.popedomPrivilege==sysPopedomPrivilege.id.popedomPrivilege}">
+                                            <c:set value="checked" var="xx" scope="page"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <legend><input type='checkbox' class='checkbox' name='popedomModule' ${xx}
                                                    value='${sysPopedomSup.id.popedomModule},${sysPopedomSup.id.popedomPrivilege}'
                                                    id='${sysPopedomSup.id.popedomModule}_${sysPopedomSup.id.popedomPrivilege}'
+                                                   title="${sysPopedomSup.title}"
                                                    onClick='goSelect(this.id)'>${sysPopedomSup.popedomName}
                                     </legend>
+                                    <c:remove var="xx" scope="page"/>
                                     <c:forEach items="${requestScope.sysPopedoms}" var="sysPopedomSub">
                                         <c:if test="${sysPopedomSup.id.popedomModule==sysPopedomSub.id.popedomModule
 				 	                  &&sysPopedomSub.id.popedomModule!=sysPopedomSub.id.popedomPrivilege}">
+
+
+                                            <c:forEach items="${requestScope.sysPopedomPrivileges}"
+                                                       var="sysPopedomPrivilege">
+                                                <c:if test="${sysPopedomSup.id.popedomModule==sysPopedomPrivilege.id.popedomModule&&sysPopedomSup.id.popedomPrivilege==sysPopedomPrivilege.id.popedomPrivilege}">
+                                                    <c:set value="checked" var="xxx" scope="page"/>
+                                                </c:if>
+                                            </c:forEach>
                                             <div><input type='checkbox' class='checkbox' name='popedomModule'
+                                                        title="${sysPopedomSub.title}" ${xxx}
                                                         value='${sysPopedomSub.id.popedomModule},${sysPopedomSub.id.popedomPrivilege}'
                                                         id='${sysPopedomSub.id.popedomModule}_${sysPopedomSub.id.popedomPrivilege}'
                                                         onClick='goSelect(this.id)'>${sysPopedomSub.popedomName}
                                             </div>
+                                            <c:remove var="xxx" scope="page"/>
                                         </c:if>
                                     </c:forEach>
                                 </fieldset>
