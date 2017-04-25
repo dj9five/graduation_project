@@ -19,4 +19,36 @@ public class DataType {
         }
         return null;
     }
+
+    /*
+    * 利用给定的流水位生成第一个流水号*/
+    public static String geneFirstGlideNumber(Integer glideBit) {
+        if (glideBit == null || glideBit < 3) {
+            glideBit = 3;
+        }
+        String glideNumber = "";
+        for (int i = 0; i < glideBit - 1; i++) {
+            glideNumber = glideNumber + "0";
+        }
+        glideNumber = glideNumber + "1";
+        return glideNumber;
+    }
+
+    public static void main(String[] args) {
+        System.err.println(geneNextGlideNumber("005"));
+    }
+
+    /*
+    * 根据当前的流水号生成下一个流水号*/
+    public static String geneNextGlideNumber(String curGlideNumber) {
+        if (StringUtils.isBlank(curGlideNumber)) {
+            throw new RuntimeException("不能计算下一个流水号");
+        }
+        curGlideNumber="1"+curGlideNumber;
+        Integer icurGlideNumber=Integer.parseInt(curGlideNumber);
+        icurGlideNumber++;
+        curGlideNumber=icurGlideNumber+"";
+        curGlideNumber=curGlideNumber.substring(1);
+        return curGlideNumber;
+    }
 }

@@ -29,7 +29,7 @@
 				    <strong>客户管理</strong>
 					<ul style="background: #1B7CD0">
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/khbf.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" target="rightFrame" style="color: #040205">客户拜访</a></li>
+						           <a href="${pageContext.request.contextPath}/crm/companyAction_list.do" target="rightFrame" style="color: #040205">客户拜访</a></li>
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/lxrlb.png" width="17" height="17">
 						           <a href="${pageContext.request.contextPath}/crm/customer/linkman/view.jsp" target="rightFrame" style="color: #040205">联系人列表</a></li>
 						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/lxjllb.png" width="17" height="17">

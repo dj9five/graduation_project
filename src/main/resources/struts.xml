@@ -34,7 +34,6 @@
             <result name="top">/WEB-INF/page/menu/top.jsp</result>
             <result name="left">/WEB-INF/page/menu/left.jsp</result>
         </action>
-
         <!-- 用户部门路径配置-->
         <action name="sysUserGroupAction_*" class="com.me.crm.web.action.SysUserGroupAction" method="{1}">
             <result name="add">/WEB-INF/sys/group/add.jsp</result>
@@ -74,6 +73,18 @@
                 <param name="namespace">/sys</param>
             </result>
             <result name="popmsg_popedom">/WEB-INF/sys/popmsg_popedom.jsp</result>
+        </action>
+    </package>
+    <!-- 客户路径配置-->
+    <package name="crm" namespace="/crm" extends="struts-default">
+        <action name="companyAction_*" class="com.me.crm.web.action.CompanyAction" method="{1}">
+            <result name="add">/WEB-INF/crm/customer/base/add.jsp</result>
+            <result name="list">/WEB-INF/crm/customer/base/list.jsp</result>
+            <result name="edit">/WEB-INF/crm/customer/base/edit.jsp</result>
+            <result name="listAction" type="redirectAction">
+                <param name="actionName">sysUserGroupAction_list</param>
+                <param name="namespace">/crm</param>
+            </result>
         </action>
     </package>
 </struts>

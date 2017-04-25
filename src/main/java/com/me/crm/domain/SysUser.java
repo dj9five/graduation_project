@@ -42,8 +42,6 @@ public class SysUser implements java.io.Serializable {
     private Date finishSchoolDate; // 毕业日期
 
 
-
-
     private String consortName;
     private String youngoneName;
     private String officetelePhone;
@@ -58,6 +56,10 @@ public class SysUser implements java.io.Serializable {
     private String planing;
     private String empolder;
     private String relation;
+
+    public SysUser() {
+
+    }
 
     public Integer getId() {
         return id;

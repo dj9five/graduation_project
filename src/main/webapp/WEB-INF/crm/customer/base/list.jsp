@@ -183,7 +183,7 @@
     </button>
 </div>
 <div class="border">
-    <s:form method="post" action="companyAction_delete.do" namespace="/sys">
+    <s:form method="post" action="companyAction_delete.do" namespace="/crm">
         <table width="100%" border="0" cellspacing="0" cellpadding="0" id="PowerTable" class="PowerTable">
             <tr>
                 <td width="3%" class="listViewThS1">
