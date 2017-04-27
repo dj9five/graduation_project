@@ -69,7 +69,6 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
 
     public List<T> findObjectsByConditionWithNoPage(String whereHql, final Object[] params, LinkedHashMap<String, String> orderby) {
         String hql = "select  o  from " + entityClass.getSimpleName() + " o where 1=1 ";
-        System.out.println("hql  " + hql);
         //在select语句后面加查询条件
         if (StringUtils.isNotBlank(whereHql)) {
             hql = hql + whereHql;
@@ -77,7 +76,6 @@ public class CommonDaoImpl<T> extends HibernateDaoSupport implements ICommonDao<
         //处理排序
         String orderbystr = buildOderBy(orderby);
         hql = hql + orderbystr;
-        System.out.println("hql  " + hql);
         final String fhql = hql;
         List<T> list = (List<T>) this.getHibernateTemplate().execute(new HibernateCallback() {
 

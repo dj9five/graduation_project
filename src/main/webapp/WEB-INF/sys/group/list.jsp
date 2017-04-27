@@ -47,12 +47,6 @@
                                     <img src="${pageContext.request.contextPath}/ui/images/button/sousuo.png" border='0'
                                          align='absmiddle'>&nbsp;搜索
                                 </button>
-                                <button type='button' class='button' onMouseOver="this.className='button_over';"
-                                        onMouseOut="this.className='button';"
-                                        onClick="forward('group.do?method=search')">
-                                    <img src="${pageContext.request.contextPath}/ui/images/button/qingkong.png"
-                                         border='0' align='absmiddle'>&nbsp;清空
-                                </button>
                             </div>
                         </td>
                     </tr>

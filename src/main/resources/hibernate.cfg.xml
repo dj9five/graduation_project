@@ -19,5 +19,8 @@
     <mapping resource="com/me/crm/domain/SysPopedomPrivilege.hbm.xml"/>
     <mapping resource="com/me/crm/domain/Company.hbm.xml"/>
     <mapping resource="com/me/crm/domain/SysCodeRule.hbm.xml"/>
+    <mapping resource="com/me/crm/domain/SysDictionaryType.hbm.xml"/>
+    <mapping resource="com/me/crm/domain/Province.hbm.xml"/>
+    <mapping resource="com/me/crm/domain/City.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

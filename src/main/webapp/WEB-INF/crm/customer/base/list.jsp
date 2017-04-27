@@ -60,14 +60,15 @@
 <body>
 <div class="mtitle">
     <div class="mtitle-row">&nbsp;</div>
-    <span id="menu_selected" class="menu_selected">客户拜访</span>
+    <b><span id="menu_selected" class="menu_selected" style="font-size: larger">客户信息管理</span></b>
 </div>
 <div class="link_title">
     <br>&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">今天需要联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">已过期未联系的客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp">全部</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">公海客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">潜在客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">重要客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">正式客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">无效客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 <br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">

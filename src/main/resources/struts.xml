@@ -82,7 +82,7 @@
             <result name="list">/WEB-INF/crm/customer/base/list.jsp</result>
             <result name="edit">/WEB-INF/crm/customer/base/edit.jsp</result>
             <result name="listAction" type="redirectAction">
-                <param name="actionName">sysUserGroupAction_list</param>
+                <param name="actionName">companyAction_list</param>
                 <param name="namespace">/crm</param>
             </result>
         </action>
