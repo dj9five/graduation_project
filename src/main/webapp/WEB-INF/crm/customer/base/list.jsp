@@ -64,7 +64,7 @@
 </div>
 <div class="link_title">
     <br>&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">公海客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/crm/companyAction_listziyuan.do" style="font-size: larger">公海客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">潜在客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">重要客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/crm/customer/base/list.jsp" style="font-size: larger">正式客户</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

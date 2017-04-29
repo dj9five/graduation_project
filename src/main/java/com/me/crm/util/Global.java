@@ -30,4 +30,5 @@ public class Global {
     public static final String QUALITY="quality";
 
 
+
 }

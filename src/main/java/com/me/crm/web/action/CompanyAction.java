@@ -1,25 +1,24 @@
 package com.me.crm.web.action;
 
+import com.me.bean.CompanySearch;
 import com.me.crm.container.ServiceProvider;
-import com.me.crm.domain.City;
-import com.me.crm.domain.Province;
-import com.me.crm.domain.SysDictionaryType;
-import com.me.crm.domain.SysUser;
+import com.me.crm.domain.*;
 import com.me.crm.service.ICityService;
 import com.me.crm.service.ICompanyService;
 import com.me.crm.service.IProvinceService;
 import com.me.crm.service.ISysDictionaryTypeService;
-import com.me.crm.util.Global;
-import com.me.crm.util.PingyinUtils;
-import com.me.crm.util.SessionUtils;
+import com.me.crm.util.*;
 import com.me.crm.web.form.CompanyForm;
 import com.opensymphony.xwork2.ModelDriven;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -41,7 +40,31 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             (ICityService) ServiceProvider.getService(ICityService.SERVICE_NAME);
 
     public String list() {
-        return "list";
+        //处理客户等级的下拉选
+        List<SysDictionaryType> gradesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.GRADE);
+        request.setAttribute("gradesSelect", gradesSelect);
+        //处理客户来源
+        List<SysDictionaryType> sourcesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.SOURCE);
+        request.setAttribute("sourcesSelect", sourcesSelect);
+        //处理客户性质
+        List<SysDictionaryType> qualitySelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.QUALITY);
+        request.setAttribute("qualitySelect", qualitySelect);
+        //实例化
+        CompanySearch companySearch = new CompanySearch();
+        companySearch.setCode(companyForm.getCode());
+        companySearch.setName(companyForm.getName());
+        companySearch.setPycode(companyForm.getPycode());
+        companySearch.setGrade(companyForm.getGrade());
+        companySearch.setSource(companyForm.getSource());
+        companySearch.setQuality(companyForm.getQuality());
+        companySearch.setTel1(companyForm.getTel1());
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysCondition(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "list";
+        }
+        return null;
     }
     /*显示客户添加页面*/
     public String add() {
@@ -105,11 +128,122 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         }
         return null;
     }
-    public String save(){
-        return "listAction";
+
+    public String save() throws InvocationTargetException, IllegalAccessException {
+        //实例化po
+        Company company = new Company();
+        //注册转化器
+        ConvertUtils.register(new SQLDateConverter(), java.sql.Date.class);
+        //复制po到vo
+        BeanUtils.copyProperties(company, companyForm);
+        /**
+         * 处理特殊情况
+         */
+        String userid = companyForm.getOwnerUser();
+        if (StringUtils.isNotBlank(userid)) {
+            SysUser sysUser = new SysUser();
+            sysUser.setId(Integer.parseInt(userid.trim()));
+            company.setSysUser(sysUser);
+        }
+        //设置分配给所属人的日期
+        company.setDispenseDate(companyForm.getCreateTime());
+        company.setShareFlag('N');
+        /*
+        * 保存 获取当前用户*/
+        SysUser curSysUser = SessionUtils.getSysUserFromSession(request);
+        if (curSysUser != null) {
+            companyService.saveCompany(curSysUser, company);
+            return "listAction";
+        }
+        return null;
+    }
+    public String update() throws InvocationTargetException, IllegalAccessException {
+        //实例化po
+        Company company = new Company();
+        //注册转化器
+        ConvertUtils.register(new SQLDateConverter(), java.sql.Date.class);
+        //复制po到vo
+        BeanUtils.copyProperties(company, companyForm);
+        /**
+         * 处理特殊情况
+         */
+        String userid = companyForm.getOwnerUser();
+        if (StringUtils.isNotBlank(userid)) {
+            SysUser sysUser = new SysUser();
+            sysUser.setId(Integer.parseInt(userid.trim()));
+            company.setSysUser(sysUser);
+            company.setShareFlag('N');
+        /*
+        * 保存 获取当前用户*/
+        SysUser curSysUser = SessionUtils.getSysUserFromSession(request);
+        if (curSysUser != null) {
+            companyService.updateCompany(curSysUser, company);
+            return "listAction";
+        }
+        }
+        return null;
+    }
+
+    public String listziyuan() {
+        CompanySearch companySearch = new CompanySearch();
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "list";
+        }
+        return "null";
     }
 
     public CompanyForm getModel() {
+
         return companyForm;
+    }
+
+    public String edit() throws InvocationTargetException, IllegalAccessException {
+        //处理客户等级的下拉选
+        List<SysDictionaryType> gradesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.GRADE);
+        request.setAttribute("gradesSelect", gradesSelect);
+        //处理区域名称的下拉选
+        List<SysDictionaryType> regionNamesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.REGIONNAME);
+        request.setAttribute("regionNamesSelect", regionNamesSelect);
+        //获取所有省的信息
+        List<Province> provincesSelect = provinceService.findAllProvince();
+        request.setAttribute("provincesSelect", provincesSelect);
+
+        //获取客户的id
+        String sid = request.getParameter("id");
+        if (StringUtils.isNotBlank(sid)) {
+            //通过客户id获取客户的信息
+            Integer id = Integer.parseInt(sid.trim());
+            Company company = companyService.findCompanyById(id);
+            //赋值客户值到vo中
+            BeanUtils.copyProperties(companyForm, company);
+            //特殊处理
+            //获得省的名称
+            String pname = company.getProvince();
+            Province province = provinceService.findProvinceByName(pname);
+            if (province != null) {
+                //根据省的id查询省的城市信息
+                List<City> citiesSelect = cityService.findCtiesByPid(province.getId());
+                request.setAttribute("citiesSelect", citiesSelect);
+            }
+            if (company.getSysUser()!=null){
+                //处理所属人id
+                companyForm.setOwnerUser(company.getSysUser().getId()+"");
+            }
+
+            return "edit";
+        }
+
+        return null;
+    }
+    public String delete(){
+        String[] sids=request.getParameterValues("ids");
+        if (sids!=null&&sids.length>0){
+            Integer ids[]= DataType.converterStringArray2IntegerArray(sids);
+            companyService.deleteCompanyById(ids);
+        }
+        return "listAction";
     }
 }

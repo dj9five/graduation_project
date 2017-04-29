@@ -1,9 +1,14 @@
 package com.me.crm.service.impl;
 
+import com.me.bean.CompanySearch;
+import com.me.crm.dao.ICompanyDao;
 import com.me.crm.dao.ISysCodeRuleDao;
+import com.me.crm.domain.Company;
 import com.me.crm.domain.SysCodeRule;
+import com.me.crm.domain.SysUser;
 import com.me.crm.service.ICompanyService;
 import com.me.crm.util.DataType;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -11,7 +16,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -22,6 +29,8 @@ import java.util.List;
 public class CompanyServiceImpl implements ICompanyService {
     @Resource(name = ISysCodeRuleDao.service_name)
     private ISysCodeRuleDao sysCodeRuleDao;
+    @Resource(name = ICompanyDao.SERVICE_NAME)
+    private ICompanyDao companyDao;
     //生成客户编码
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
     public String getCompanyCodeByTabName(String tabName) {
@@ -108,5 +117,86 @@ public class CompanyServiceImpl implements ICompanyService {
                 return code;
             }
         }
-    }}
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void saveCompany(SysUser curSysUser, Company company) {
+        companyDao.save(company);
+    }
+
+    public List<Company> findCompanysCondition(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            if (StringUtils.isNotBlank(companySearch.getCode())) {
+                whereHql = whereHql + " and o.code like ?";
+                paramsList.add("%" + companySearch.getCode().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getName())) {
+                whereHql = whereHql + " and o.name like ?";
+                paramsList.add("%" + companySearch.getName().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getGrade())) {
+                whereHql = whereHql + " and o.grade like ?";
+                paramsList.add("%" + companySearch.getGrade().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getPycode())) {
+                whereHql = whereHql + " and o.pycode like ?";
+                paramsList.add("%" + companySearch.getPycode().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getQuality())) {
+                whereHql = whereHql + " and o.quality like ?";
+                paramsList.add("%" + companySearch.getCode().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getSource())) {
+                whereHql = whereHql + " and o.source like ?";
+                paramsList.add("%" + companySearch.getSource().trim() + "%");
+            }
+            if (StringUtils.isNotBlank(companySearch.getTel1())) {
+                whereHql = whereHql + " and o.tel1 like ? ";
+                paramsList.add("%" + companySearch.getTel1().trim() + "%");
+            }
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
+    }
+
+    public List<Company> findCompanysConditionSource(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            whereHql = whereHql + " and o.grade like ?";
+            paramsList.add("%" + "重要客户" + "%");
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
+    }
+
+    public Company findCompanyById(Integer id) {
+        return companyDao.findObjectById(id);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateCompany(SysUser curSysUser, Company company) {
+        companyDao.update(company);
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void deleteCompanyById(Integer[] ids) {
+        companyDao.deleteById((java.io.Serializable[]) ids);
+
+    }
+}
 
