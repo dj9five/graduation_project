@@ -11,4 +11,5 @@ public class menuAction extends BaseAction{
     public String left() {
         return "left";
     }
+    public String right(){return "right";}
 }

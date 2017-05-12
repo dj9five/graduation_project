@@ -176,7 +176,7 @@ public class CompanyServiceImpl implements ICompanyService {
                 paramsList.add(curSysuser.getId());
             }
             whereHql = whereHql + " and o.grade like ?";
-            paramsList.add("%" + "重要客户" + "%");
+            paramsList.add("%" + "资源客户" + "%");
             LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
             orderby.put("o.id", "asc");
             return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
@@ -197,6 +197,98 @@ public class CompanyServiceImpl implements ICompanyService {
     public void deleteCompanyById(Integer[] ids) {
         companyDao.deleteById((java.io.Serializable[]) ids);
 
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void addUpdateShareSetOne(String s_module, Integer id, Integer[] uids) {
+        if (StringUtils.isNotBlank(s_module) && id != null && uids != null && uids.length > 0) {
+            if ("c_company".equals(s_module)) {
+                Company company = companyDao.findObjectById(id);
+                if (company != null) {
+                    StringBuffer buf = new StringBuffer();
+                    for (int i = 0; i < uids.length; i++) {
+                        buf.append(uids[i] + "#");
+                    }
+                    if ('N' == company.getShareFlag()) {
+                        company.setShareFlag('Y');
+                        company.setShareIds("#" + buf.toString());
+                        companyDao.update(company);
+                    } else {
+                        company.setShareFlag('Y');
+                        company.setShareIds(company.getShareIds() + buf.toString());
+                    }
+                }
+            }
+        }
+
+    }
+
+    public List<Company> findCompanysConditionqianzai(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            whereHql = whereHql + " and o.grade like ?";
+            paramsList.add("%" + "潜在客户" + "%");
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
+    }
+
+    public List<Company> findCompanysConditionzhongyao(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            whereHql = whereHql + " and o.grade like ?";
+            paramsList.add("%" + "重要客户" + "%");
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
+    }
+
+    public List<Company> findCompanysConditionzhengshi(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            whereHql = whereHql + " and o.grade like ?";
+            paramsList.add("%" + "正式客户" + "%");
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
+    }
+
+    public List<Company> findCompanysConditionwuxiao(SysUser curSysuser, CompanySearch companySearch) {
+        if (curSysuser != null && companySearch != null) {
+            String whereHql = "";
+            List paramsList = new ArrayList();
+            if (curSysuser.getId() != null) {
+                whereHql = whereHql + " and o.sysUser.id=?";
+                paramsList.add(curSysuser.getId());
+            }
+            whereHql = whereHql + " and o.grade like ?";
+            paramsList.add("%" + "无效客户" + "%");
+            LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+            orderby.put("o.id", "asc");
+            return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
+        }
+        return null;
     }
 }
 

@@ -27,4 +27,6 @@ public interface ISysUserService {
     SysUser findSysUserById(Integer id);
 
     void updateSysUser(SysUser newSysUser);
+
+    List<SysUser> findAllSysUser();
 }

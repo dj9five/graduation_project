@@ -3,10 +3,7 @@ package com.me.crm.web.action;
 import com.me.bean.CompanySearch;
 import com.me.crm.container.ServiceProvider;
 import com.me.crm.domain.*;
-import com.me.crm.service.ICityService;
-import com.me.crm.service.ICompanyService;
-import com.me.crm.service.IProvinceService;
-import com.me.crm.service.ISysDictionaryTypeService;
+import com.me.crm.service.*;
 import com.me.crm.util.*;
 import com.me.crm.web.form.CompanyForm;
 import com.opensymphony.xwork2.ModelDriven;
@@ -38,7 +35,12 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
     //获取城市的业务层
     private ICityService cityService =
             (ICityService) ServiceProvider.getService(ICityService.SERVICE_NAME);
-
+    //获取部门的业务层
+    private ISysUserGroupService sysUserGroupService =
+            (ISysUserGroupService) ServiceProvider.getService(ISysUserGroupService.SERVICE_NAME);
+    //获取用户的业务层
+    private ISysUserService sysUserService=
+            (ISysUserService)ServiceProvider.getService(ISysUserService.SERVICE_NAME);
     public String list() {
         //处理客户等级的下拉选
         List<SysDictionaryType> gradesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.GRADE);
@@ -96,6 +98,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         }
         return null;
     }
+
 
     /*
     * 显示省下对应的城市*/
@@ -183,18 +186,127 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         }
         return null;
     }
+    /*资源客户升阶*/
+    public String advance(){
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        String sid=request.getParameter("ids");
+        Integer id=Integer.parseInt(sid.trim());
+        Company company=companyService.findCompanyById(id);
+        company.setGrade("潜在客户");
+        companyService.updateCompany(curSysuser,company);
+        CompanySearch companySearch = new CompanySearch();
 
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listziyuan";
+        }
+        return "null";
+    }
+    /*潜在客户升阶*/
+    public String advance_b(){
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        String sid=request.getParameter("ids");
+        Integer id=Integer.parseInt(sid.trim());
+        Company company=companyService.findCompanyById(id);
+        company.setGrade("重要客户");
+        companyService.updateCompany(curSysuser,company);
+        CompanySearch companySearch = new CompanySearch();
+
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listqianzai";
+        }
+        return "null";
+    }
+    /*重要客户升阶*/
+    public String advance_c(){
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        String sid=request.getParameter("ids");
+        Integer id=Integer.parseInt(sid.trim());
+        Company company=companyService.findCompanyById(id);
+        company.setGrade("正式客户");
+        companyService.updateCompany(curSysuser,company);
+        CompanySearch companySearch = new CompanySearch();
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listzhongyao";
+        }
+        return "null";
+    }
+    /*无效客户复活*/
+    public String advance_d(){
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        String sid=request.getParameter("ids");
+        Integer id=Integer.parseInt(sid.trim());
+        Company company=companyService.findCompanyById(id);
+        company.setGrade("资源客户");
+        companyService.updateCompany(curSysuser,company);
+        CompanySearch companySearch = new CompanySearch();
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listwuxiao";
+        }
+        return "null";
+    }
+     /*资源客户*/
     public String listziyuan() {
         CompanySearch companySearch = new CompanySearch();
         SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
         if (curSysuser != null) {
             List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
             request.setAttribute("companyList", companyList);
-            return "list";
+            return "listziyuan";
         }
         return "null";
     }
-
+    /*潜在客户*/
+    public String listqianzai() {
+        CompanySearch companySearch = new CompanySearch();
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionqianzai(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listqianzai";
+        }
+        return "null";
+    }
+    /*重要客户*/
+    public String listzhongyao() {
+        CompanySearch companySearch = new CompanySearch();
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionzhongyao(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listzhongyao";
+        }
+        return "null";
+    }
+    /*正式客户*/
+    public String listzhengshi() {
+        CompanySearch companySearch = new CompanySearch();
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionzhengshi(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listzhengshi";
+        }
+        return "null";
+    }
+    /*无效客户*/
+    public String listwuxiao() {
+        CompanySearch companySearch = new CompanySearch();
+        SysUser curSysuser = SessionUtils.getSysUserFromSession(request);
+        if (curSysuser != null) {
+            List<Company> companyList = companyService.findCompanysConditionwuxiao(curSysuser, companySearch);
+            request.setAttribute("companyList", companyList);
+            return "listwuxiao";
+        }
+        return "null";
+    }
     public CompanyForm getModel() {
 
         return companyForm;
@@ -238,6 +350,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
 
         return null;
     }
+
     public String delete(){
         String[] sids=request.getParameterValues("ids");
         if (sids!=null&&sids.length>0){
@@ -245,5 +358,61 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             companyService.deleteCompanyById(ids);
         }
         return "listAction";
+    }
+
+    /*显示增加共享和减少共享页面*/
+    public String showShareSetOne() {
+        //获取客户id
+        String sid = request.getParameter("id");
+        if (StringUtils.isNotBlank(sid)) {
+            Integer id = Integer.parseInt(sid.trim());
+            Company company = companyService.findCompanyById(id);
+            request.setAttribute("company", company);
+        }
+        //获取部门信息
+        List<SysUserGroup> sysUserGroups=sysUserGroupService.findAllSysUserGroup();
+        request.setAttribute("sysUserGroups",sysUserGroups);
+        //获取用户信息
+        List<SysUser> sysUsers=sysUserService.findAllSysUser();
+        request.setAttribute("sysUsers",sysUsers);
+        return "showShareSetOne";
+    }
+
+    /*取消共享页面*/
+    public String showShareCancelOne() {
+        return "showShareCancelOne";
+    }
+
+    /*查看共享页面*/
+    public String showShareViewOne() {
+        return "showShareViewOne";
+    }
+    /*修改共享设置*/
+    public String updateShareSetOne(){
+        //获取客户id
+        String sid=request.getParameter("id");
+        if (StringUtils.isNotBlank(sid)){
+            Integer id=Integer.parseInt(sid.trim());
+            //获取模块名称
+            String s_module=request.getParameter("s_module");
+            if (StringUtils.isNotBlank(s_module)){
+            //获取用户id
+            String[] suid=request.getParameterValues("uid");
+            Integer uids[]=DataType.converterStringArray2IntegerArray(suid);
+            String sharetype=request.getParameter("sharetype");
+            if (StringUtils.isNotBlank(sharetype)){
+                if ("add".equals(sharetype)){
+                    //增加共享
+                    companyService.addUpdateShareSetOne(s_module,id,uids);
+                }
+                if ("minus".equals(sharetype)){
+                    //增加共享
+                    //companyService.minusUpdateShareSetOne(s_module,id,uids);
+                }
+            }
+            }
+        }
+
+        return "updateShareSetOne";
     }
 }

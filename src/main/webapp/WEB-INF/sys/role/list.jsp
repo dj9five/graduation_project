@@ -85,8 +85,7 @@ function setMenu(id) {
     	<td width="6%" class="listViewThS1">
    	    <input type="checkbox" id="checkall" name="checkall" value="" class="checkbox" onClick="checkAll()"></td>
   	    <td width="17%" class="listViewThS1">名称</td>
-  	    <td width="27%" class="listViewThS1">可访问菜单</td>
-        <td width="28%" class="listViewThS1">可进行的操作</td>
+        <td width="28%" class="listViewThS1">权限设置</td>
 	</tr>
 	<s:if test="%{#request.sysRoles!=null }">
 		<s:iterator value="%{#request.sysRoles}" var="sysRole">
@@ -96,7 +95,6 @@ function setMenu(id) {
 		</td>
   	    <td><a href="${pageContext.request.contextPath}/sys/sysRoleAction_edit.do?id=<s:property value="%{#sysRole.id}"/>">
 		<s:property value="%{#sysRole.name}"/></a></td>
-		<td><a href="#" onClick="setMenu('<s:property value="%{#sysRole.id}"/>')">设置</a></td>
 		<td><a href="#" onClick="setPopedom('<s:property value="%{#sysRole.id}"/>')">设置</a></td>
 	</tr>
 		</s:iterator>

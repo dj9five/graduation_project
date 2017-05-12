@@ -18,51 +18,69 @@
 </script>
 
 </head>
-<body  ondblclick="ToggleNav();"  style="background :#1B7CD0">
+<body ondblclick="ToggleNav();" style="background: #1B7CD0">
 <div id="main">
 <div id="sidetree">
-<div class="treeheader">操作菜单</div>
+	<div class="treeheader" style="font-size: large">菜单</div>
   
 	<div id="sidetreecontrol"><a href="?#">菜单合拢</a> | <a href="?#">菜单展开</a></div>
 		<ul id="tree">
-				    <li><img src="${pageContext.request.contextPath}/ui/images/menu/khgl.png" width="17" height="17">
-				    <strong>客户管理</strong>
+			<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17" height="17">
+				<strong style="font-size: large">客户管理</strong>
 					<ul style="background: #1B7CD0">
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/khbf.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/crm/companyAction_list.do" target="rightFrame" style="color: #040205">客户拜访</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/lxrlb.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/crm/customer/linkman/view.jsp" target="rightFrame" style="color: #040205">联系人列表</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/lxjllb.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/crm/customer/linktouch/view.jsp" target="rightFrame" style="color: #040205">联系记录列表</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/khccsz.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/crm/customer/rule/rule.jsp" target="rightFrame" style="color: #040205">客户查重设置 </a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_listziyuan.do"
+							   target="rightFrame" style="color: #040205">资源客户</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_listqianzai.do"
+							   target="rightFrame" style="color: #040205">潜在客户</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_listzhongyao.do" target="rightFrame"
+							   style="color: #040205">重要客户</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_listzhengshi.do" target="rightFrame"
+							   style="color: #040205">正式客户</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_listwuxiao.do" target="rightFrame"
+							   style="color: #040205">无效客户</a></li>
 					</ul>
 				 </li>
-				    <li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz.png" width="17" height="17">
-				    <strong>系统设置 </strong>
+			<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17" height="17">
+				<strong style="font-size: large">系统设置 </strong>
 					<ul style="background: #1B7CD0">
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/bmsz.png" width="17" height="17">
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/companyAction_list.do" target="rightFrame"
+							   style="color: #040205 ">客户设置</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
 						           <a href="${pageContext.request.contextPath}/sys/sysUserGroupAction_list.do" target="rightFrame" style="color: #040205">部门设置</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/rsgl.png" width="17" height="17">
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
 						           <a href="${pageContext.request.contextPath}/sys/sysUserAction_list.do" target="rightFrame" style="color: #040205">人事管理</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/czqxz.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/sys/sysRoleAction_list.do" target="rightFrame" style="color: #040205">操作权限组</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/sfzl.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/sys/province/list.jsp" target="rightFrame" style="color: #040205">省份资料</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/cszl.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/sys/city/list.jsp" target="rightFrame" style="color: #040205">城市资料</a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/bmzj.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/sys/code/list.jsp" target="rightFrame" style="color: #040205">编码规则</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/sys/sysRoleAction_list.do" target="rightFrame"
+							   style="color: #040205">操作权限</a></li>
 					</ul>
 				 </li>
 
-				    <li><img src="${pageContext.request.contextPath}/ui/images/menu/bbyfx.png" width="17" height="17">
-				    <strong>报表与分析</strong>					
+			<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17" height="17">
+				<strong style="font-size: large">报表分析</strong>
 					<ul style="background: #1B7CD0">
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/khflfx.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/report/khflfx.jsp" target="rightFrame" style="color: #040205">客户分类分析 </a></li>
-						           <li><img src="${pageContext.request.contextPath}/ui/images/menu/khgjfx.png" width="17" height="17">
-						           <a href="${pageContext.request.contextPath}/report/khflfx.jsp" target="rightFrame" style="color: #040205">客户分析 </a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/report/xtsz1.jsp" target="rightFrame"
+							   style="color: #040205">客户分类分析 </a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/report/xtsz1.jsp" target="rightFrame"
+							   style="color: #040205">客户分析 </a></li>
 					</ul>
 				 </li>
 		</ul>

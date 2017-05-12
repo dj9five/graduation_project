@@ -60,7 +60,7 @@
 <body>
 <div class="mtitle">
     <div class="mtitle-row">&nbsp;</div>
-    <b><span id="menu_selected" class="menu_selected" style="font-size: larger">客户信息管理</span></b>
+    <b><span id="menu_selected" class="menu_selected" style="font-size: larger">无效客户信息管理</span></b>
 </div>
 <br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
@@ -150,20 +150,9 @@
 <div class="control">
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
-            onClick="forward('${pageContext.request.contextPath}/crm/companyAction_add.do')">
-        <img src="${pageContext.request.contextPath}/ui/images/button/xinjian.png" border='0' align='absmiddle'>&nbsp;新建
-    </button>
-    <button type='button' class='button' onMouseOver="this.className='button_over';"
-            onMouseOut="this.className='button';"
             onClick="gonextTouchTime()">
         <img src="${pageContext.request.contextPath}/ui/images/button/xiacilxsj.png" border='0' align='absmiddle'>&nbsp;下次联系时间
     </button>
-    <button type='button' class='button' onMouseOver="this.className='button_over';"
-            onMouseOut="this.className='button';"
-            onClick="do_share()">
-        <img src="${pageContext.request.contextPath}/ui/images/button/gongxiang.png" border='0' align='absmiddle'>&nbsp;共享
-    </button>
-
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
             onClick="goChangePerson()">
@@ -172,11 +161,11 @@
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
             onClick="document.forms[1].submit()">
-        <img src="${pageContext.request.contextPath}/ui/images/button/shanchu.png" border='0' align='absmiddle'>&nbsp;删除
+        <img src="${pageContext.request.contextPath}/ui/images/button/shanchu.png" border='0' align='absmiddle'>&nbsp;复活
     </button>
 </div>
 <div class="border">
-    <s:form method="post" action="companyAction_delete.do" namespace="/crm">
+    <s:form method="post" action="companyAction_advance_d.do" namespace="/crm">
         <table width="100%" border="0" cellspacing="0" cellpadding="0" id="PowerTable" class="PowerTable">
             <tr>
                 <td width="3%" class="listViewThS1">

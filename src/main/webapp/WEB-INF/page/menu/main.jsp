@@ -8,14 +8,15 @@
 <frameset rows="80,*" cols="*">
     <frame src="${pageContext.request.contextPath}/sys/menuAction_top.do" name="topFrame" id="topFrame" scrolling="NO"
            noresize="noresize" frameborder="0">
-    <frameset cols="220,*" id="frmstOuter">
+    <frameset cols="20%,80%" id="frmstOuter">
         <frame src="${pageContext.request.contextPath}/sys/menuAction_left.do" name="leftFrame" id="leftFrame"
                scrolling="auto""  frameborder="0" framespacing="1px" bordercolor="#4faad8">
-        <frame src="" name="rightFrame" id="rightFrame">
+        <frame src="${pageContext.request.contextPath}/sys/menuAction_right.do" name="rightFrame" id="rightFrame" scrolling="auto""  frameborder="0" framespacing="1px" bordercolor="#4faad8">
     </frameset>
 </frameset>
 <noframes>
-    <body>
+    <body >
+    <h1>123</h1>
     </body>
 </noframes>
 </html>

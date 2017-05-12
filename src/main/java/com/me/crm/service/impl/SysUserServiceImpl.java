@@ -109,5 +109,11 @@ public class SysUserServiceImpl implements ISysUserService {
     public void updateSysUser(SysUser newSysUser) {
         sysUserDao.update(newSysUser);
     }
+
+    public List<SysUser> findAllSysUser() {
+        LinkedHashMap<String, String> orderby=new LinkedHashMap<String, String>();
+        orderby.put("o.id", "asc");
+        return sysUserDao.findObjectsByConditionWithNoPage(orderby);
+    }
 }
 

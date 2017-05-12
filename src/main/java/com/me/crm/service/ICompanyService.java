@@ -25,4 +25,15 @@ public interface ICompanyService {
     void updateCompany(SysUser curSysUser, Company company);
 
     void deleteCompanyById(Integer[] ids);
+
+    void addUpdateShareSetOne(String s_module, Integer id, Integer[] uids);
+
+
+    List<Company> findCompanysConditionqianzai(SysUser curSysuser, CompanySearch companySearch);
+
+    List<Company> findCompanysConditionzhongyao(SysUser curSysuser, CompanySearch companySearch);
+
+    List<Company> findCompanysConditionzhengshi(SysUser curSysuser, CompanySearch companySearch);
+
+    List<Company> findCompanysConditionwuxiao(SysUser curSysuser, CompanySearch companySearch);
 }
