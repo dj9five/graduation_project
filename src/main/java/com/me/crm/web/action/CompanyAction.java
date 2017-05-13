@@ -2,6 +2,7 @@ package com.me.crm.web.action;
 
 import com.me.bean.CompanySearch;
 import com.me.crm.container.ServiceProvider;
+import com.me.crm.dao.ISysOperateLogDao;
 import com.me.crm.domain.*;
 import com.me.crm.service.*;
 import com.me.crm.util.*;
@@ -14,6 +15,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -41,6 +43,8 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
     //获取用户的业务层
     private ISysUserService sysUserService=
             (ISysUserService)ServiceProvider.getService(ISysUserService.SERVICE_NAME);
+    @Resource(name = ISysOperateLogDao.SERVICE_NAME)
+    private ISysOperateLogDao sysOperateLogDao;
     public String list() {
         //处理客户等级的下拉选
         List<SysDictionaryType> gradesSelect = sysDictionaryTypeService.findSysDictionaryTypeByCode(Global.GRADE);
@@ -193,13 +197,13 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         Integer id=Integer.parseInt(sid.trim());
         Company company=companyService.findCompanyById(id);
         company.setGrade("潜在客户");
-        companyService.updateCompany(curSysuser,company);
+        companyService.updateCompany1(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
-
         if (curSysuser != null) {
             List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
             request.setAttribute("companyList", companyList);
             return "listziyuan";
+
         }
         return "null";
     }
@@ -210,7 +214,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         Integer id=Integer.parseInt(sid.trim());
         Company company=companyService.findCompanyById(id);
         company.setGrade("重要客户");
-        companyService.updateCompany(curSysuser,company);
+        companyService.updateCompany2(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
 
         if (curSysuser != null) {
@@ -227,7 +231,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         Integer id=Integer.parseInt(sid.trim());
         Company company=companyService.findCompanyById(id);
         company.setGrade("正式客户");
-        companyService.updateCompany(curSysuser,company);
+        companyService.updateCompany3(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
         if (curSysuser != null) {
             List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
@@ -243,7 +247,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         Integer id=Integer.parseInt(sid.trim());
         Company company=companyService.findCompanyById(id);
         company.setGrade("资源客户");
-        companyService.updateCompany(curSysuser,company);
+        companyService.updateCompany4(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
         if (curSysuser != null) {
             List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
@@ -283,7 +287,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             request.setAttribute("companyList", companyList);
             return "listzhongyao";
         }
-        return "null";
+        return null;
     }
     /*正式客户*/
     public String listzhengshi() {
@@ -294,7 +298,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             request.setAttribute("companyList", companyList);
             return "listzhengshi";
         }
-        return "null";
+        return null;
     }
     /*无效客户*/
     public String listwuxiao() {
@@ -305,7 +309,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             request.setAttribute("companyList", companyList);
             return "listwuxiao";
         }
-        return "null";
+        return null;
     }
     public CompanyForm getModel() {
 
@@ -353,66 +357,61 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
 
     public String delete(){
         String[] sids=request.getParameterValues("ids");
+        String id1=request.getParameter("ids");
+        Integer id2=Integer.parseInt(id1.trim());
+        Company company=companyService.findCompanyById(id2);
+        SysUser curSysUser = SessionUtils.getSysUserFromSession(request);
         if (sids!=null&&sids.length>0){
             Integer ids[]= DataType.converterStringArray2IntegerArray(sids);
-            companyService.deleteCompanyById(ids);
+            companyService.deleteCompanyById(ids,company,curSysUser);
         }
         return "listAction";
     }
 
-    /*显示增加共享和减少共享页面*/
-    public String showShareSetOne() {
+    /*下次联系时间*/
+    public String showNextTouchTime() {
+        return "showNextTouchTime";
+    }
+
+    /*修改下次联系时间*/
+    public String updateNextTouchTime() {
         //获取客户id
-        String sid = request.getParameter("id");
-        if (StringUtils.isNotBlank(sid)) {
-            Integer id = Integer.parseInt(sid.trim());
-            Company company = companyService.findCompanyById(id);
-            request.setAttribute("company", company);
+        String ids = request.getParameter("ids");
+        if (StringUtils.isNotBlank(ids)) {
+            String sid[] = ids.split(",");
+            Integer id[] = DataType.converterStringArray2IntegerArray(sid);
+//           获取下次联系时间
+            String snext_touch_date = request.getParameter("next_touch_date");
+            java.sql.Date next_touch_date = java.sql.Date.valueOf(snext_touch_date);
+            companyService.updateNextTouchTime(id, next_touch_date);
+            return "updateNextTouchTime";
         }
-        //获取部门信息
-        List<SysUserGroup> sysUserGroups=sysUserGroupService.findAllSysUserGroup();
-        request.setAttribute("sysUserGroups",sysUserGroups);
-        //获取用户信息
-        List<SysUser> sysUsers=sysUserService.findAllSysUser();
-        request.setAttribute("sysUsers",sysUsers);
-        return "showShareSetOne";
+        return null;
     }
-
-    /*取消共享页面*/
-    public String showShareCancelOne() {
-        return "showShareCancelOne";
+    /*显示客户转单页面*/
+    public String showChangePerson(){
+//        获取系统的用户
+        List<SysUser> sysUserSelect=sysUserService.findAllSysUser();
+        request.setAttribute("sysUserSelect",sysUserSelect);
+        return "showChangePerson";
     }
-
-    /*查看共享页面*/
-    public String showShareViewOne() {
-        return "showShareViewOne";
-    }
-    /*修改共享设置*/
-    public String updateShareSetOne(){
-        //获取客户id
-        String sid=request.getParameter("id");
-        if (StringUtils.isNotBlank(sid)){
-            Integer id=Integer.parseInt(sid.trim());
-            //获取模块名称
-            String s_module=request.getParameter("s_module");
-            if (StringUtils.isNotBlank(s_module)){
-            //获取用户id
-            String[] suid=request.getParameterValues("uid");
-            Integer uids[]=DataType.converterStringArray2IntegerArray(suid);
-            String sharetype=request.getParameter("sharetype");
-            if (StringUtils.isNotBlank(sharetype)){
-                if ("add".equals(sharetype)){
-                    //增加共享
-                    companyService.addUpdateShareSetOne(s_module,id,uids);
-                }
-                if ("minus".equals(sharetype)){
-                    //增加共享
-                    //companyService.minusUpdateShareSetOne(s_module,id,uids);
-                }
-            }
+    /*客户转单操作*/
+    public String changeHandler(){
+//        获取用户id
+        String ids=request.getParameter("ids");
+        SysUser curSysUser = SessionUtils.getSysUserFromSession(request);
+        if (StringUtils.isNotBlank(ids)){
+            String sid[]=ids.split(",");
+            Integer id[]=DataType.converterStringArray2IntegerArray(sid);
+//            获取要转给的用户id
+            String snew_owner=request.getParameter("new_owner");
+            if (StringUtils.isNotBlank(snew_owner)){
+                Integer new_owner=Integer.parseInt(snew_owner.trim());
+                companyService.changeHandler(id,new_owner,curSysUser);
+                return "changeHandler";
             }
         }
-
-        return "updateShareSetOne";
+        return null;
     }
+
 }

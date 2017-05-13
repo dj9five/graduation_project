@@ -57,6 +57,8 @@
           <element id="library" level="project" name="Maven: net.sf.json-lib:json-lib:jdk15:2.3" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.4" />
           <element id="library" level="project" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" />
+          <element id="library" level="project" name="Maven: org.jfree:jfreechart:1.0.19" />
+          <element id="library" level="project" name="Maven: org.jfree:jcommon:1.0.23" />
         </element>
       </element>
       <element id="directory" name="META-INF">

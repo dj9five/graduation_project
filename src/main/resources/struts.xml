@@ -87,6 +87,20 @@
             <result name="listzhongyao">/WEB-INF/crm/customer/listzhongyao.jsp</result>
             <result name="listzhengshi">/WEB-INF/crm/customer/listzhengshi.jsp</result>
             <result name="listwuxiao">/WEB-INF/crm/customer/listwuxiao.jsp</result>
+            <result name="showNextTouchTime">/WEB-INF/crm/customer/base/nextTouchTime.jsp</result>
+            <result name="showChangePerson">/WEB-INF/crm/customer/base/changePerson.jsp</result>
+
+            <result name="updateNextTouchTime" type="chain">
+                <param name="actionName">companyAction_showNextTouchTime</param>
+                <param name="namespace">/crm</param>
+            </result>
+
+            <result name="changeHandler" type="chain">
+                <param name="actionName">companyAction_showChangePerson</param>
+                <param name="namespace">/crm</param>
+            </result>
+
+
             <result name="listAction" type="redirectAction">
                 <param name="actionName">companyAction_list</param>
                 <param name="namespace">/crm</param>
@@ -100,5 +114,52 @@
             <result name="showShareCancelOne">/WEB-INF/crm/customer/base/shareCancelOne.jsp</result>
             <result name="showShareViewOne">/WEB-INF/crm/customer/base/shareViewOne.jsp</result>
         </action>
+        <action name="companyAction_*" class="com.me.crm.web.action.CompanyAction" method="{1}">
+            <result name="add">/WEB-INF/crm/customer/base/add.jsp</result>
+            <result name="list">/WEB-INF/crm/customer/base/list.jsp</result>
+            <result name="edit">/WEB-INF/crm/customer/base/edit.jsp</result>
+            <result name="listziyuan">/WEB-INF/crm/customer/listziyuan.jsp</result>
+            <result name="listqianzai">/WEB-INF/crm/customer/listqianzai.jsp</result>
+            <result name="listzhongyao">/WEB-INF/crm/customer/listzhongyao.jsp</result>
+            <result name="listzhengshi">/WEB-INF/crm/customer/listzhengshi.jsp</result>
+            <result name="listwuxiao">/WEB-INF/crm/customer/listwuxiao.jsp</result>
+            <result name="showNextTouchTime">/WEB-INF/crm/customer/base/nextTouchTime.jsp</result>
+            <result name="showChangePerson">/WEB-INF/crm/customer/base/changePerson.jsp</result>
+
+            <result name="updateNextTouchTime" type="chain">
+                <param name="actionName">companyAction_showNextTouchTime</param>
+                <param name="namespace">/crm</param>
+            </result>
+
+            <result name="changeHandler" type="chain">
+                <param name="actionName">companyAction_showChangePerson</param>
+                <param name="namespace">/crm</param>
+            </result>
+
+
+            <result name="listAction" type="redirectAction">
+                <param name="actionName">companyAction_list</param>
+                <param name="namespace">/crm</param>
+            </result>
+            <!--处理客户共享-->
+            <result name="showShareSetOne">/WEB-INF/crm/customer/base/shareSetOne.jsp</result>
+            <result name="updateShareSetOne" type="chain">
+                <param name="actionName">companyAction_showShareSetOne</param>
+                <param name="namespace">/crm</param>
+            </result>
+            <result name="showShareCancelOne">/WEB-INF/crm/customer/base/shareCancelOne.jsp</result>
+            <result name="showShareViewOne">/WEB-INF/crm/customer/base/shareViewOne.jsp</result>
+        </action>
+        <action name="operateLogAction_*" class="com.me.crm.web.action.operateLogAction" method="{1}">
+            <result name="list">/WEB-INF/crm/customer/file/list.jsp</result>
+        </action>
     </package>
+
+    <package name="report" namespace="/report" extends="struts-default">
+        <action name="reportAction_*" class="com.me.crm.web.action.ReportAction" method="{1}">
+            <result name="khflfx">/WEB-INF/report/khflfxReport.jsp</result>
+        </action>
+            </package>
+
+
 </struts>

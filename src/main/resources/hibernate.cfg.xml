@@ -22,5 +22,6 @@
     <mapping resource="com/me/crm/domain/SysDictionaryType.hbm.xml"/>
     <mapping resource="com/me/crm/domain/Province.hbm.xml"/>
     <mapping resource="com/me/crm/domain/City.hbm.xml"/>
+    <mapping resource="com/me/crm/domain/SysOperateLog.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

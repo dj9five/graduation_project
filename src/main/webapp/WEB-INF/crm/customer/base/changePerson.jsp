@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>经手人变更</title>
+    <title>客户转单</title>
     <link href="${pageContext.request.contextPath}/ui/css/style_cn.css" rel="stylesheet" type="text/css">
     <script src="${pageContext.request.contextPath}/ui/js/jquery-1.4.2.js" type="text/javascript"></script>
     <script src="/ui/js/win.js" type="text/javascript"></script>
@@ -15,7 +15,7 @@
                 return false;
             }
 
-            if (window.confirm("您确定进行客户经手人变更操作吗?")) {
+            if (window.confirm("您确定进行客户转单操作吗?")) {
                 document.forms[0].submit();
             }
             return false;
@@ -38,11 +38,11 @@
     <s:hidden name="ids" value="%{#parameters.ids[0]}"/>
     <div class="mtitle">
         <div class="mtitle-row">&nbsp;</div>
-        客户经手人变更
+        转单
     </div>
     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabForm">
         <tr>
-            <td><strong>选择经手人变更的目标：</strong></td>
+            <td><strong>选择转单的目标：</strong></td>
         </tr>
         <tr>
             <td>
@@ -66,7 +66,7 @@
                         onMouseOut="this.className='button';"
                         onClick="check()">
                     <img src="${pageContext.request.contextPath}/ui/images/button/biangeng.png" border='0'
-                         align='absmiddle'>&nbsp;变更
+                         align='absmiddle'>&nbsp;转单
                 </button>
                 <button type='button' class='button' onMouseOver="this.className='button_over';"
                         onMouseOut="this.className='button';"

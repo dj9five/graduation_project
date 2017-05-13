@@ -3,8 +3,11 @@ package com.me.crm.service.impl;
 import com.me.bean.CompanySearch;
 import com.me.crm.dao.ICompanyDao;
 import com.me.crm.dao.ISysCodeRuleDao;
+import com.me.crm.dao.ISysOperateLogDao;
+import com.me.crm.dao.ISysUserDao;
 import com.me.crm.domain.Company;
 import com.me.crm.domain.SysCodeRule;
+import com.me.crm.domain.SysOperateLog;
 import com.me.crm.domain.SysUser;
 import com.me.crm.service.ICompanyService;
 import com.me.crm.util.DataType;
@@ -31,6 +34,10 @@ public class CompanyServiceImpl implements ICompanyService {
     private ISysCodeRuleDao sysCodeRuleDao;
     @Resource(name = ICompanyDao.SERVICE_NAME)
     private ICompanyDao companyDao;
+    @Resource(name = ISysUserDao.SERVICE_NAME)
+    private ISysUserDao sysUserDao;
+    @Resource(name = ISysOperateLogDao.SERVICE_NAME)
+    private ISysOperateLogDao sysOperateLogDao;
     //生成客户编码
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
     public String getCompanyCodeByTabName(String tabName) {
@@ -121,7 +128,18 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
     public void saveCompany(SysUser curSysUser, Company company) {
-        companyDao.save(company);
+        if (curSysUser != null && company != null) {
+            companyDao.save(company);
+//            添加日志
+            SysOperateLog log = new SysOperateLog();
+            log.setUserName(curSysUser.getName());
+            log.setCnname(curSysUser.getCnname());
+            log.setActionType("客户新增");
+            String actionContent = "新增一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+            log.setActionContent(actionContent);
+            log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+            sysOperateLogDao.save(log);
+        }
     }
 
     public List<Company> findCompanysCondition(SysUser curSysuser, CompanySearch companySearch) {
@@ -191,12 +209,29 @@ public class CompanyServiceImpl implements ICompanyService {
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
     public void updateCompany(SysUser curSysUser, Company company) {
         companyDao.update(company);
+        SysOperateLog log = new SysOperateLog();
+        log.setUserName(curSysUser.getName());
+        log.setCnname(curSysUser.getCnname());
+        log.setActionType("客户修改");
+        String actionContent = "修改一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+        log.setActionContent(actionContent);
+        log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+        sysOperateLogDao.save(log);
+
     }
 
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
-    public void deleteCompanyById(Integer[] ids) {
-        companyDao.deleteById((java.io.Serializable[]) ids);
+    public void deleteCompanyById(Integer[] ids, Company company, SysUser curSysUser) {
 
+        companyDao.deleteById((java.io.Serializable[]) ids);
+        SysOperateLog log = new SysOperateLog();
+        log.setUserName(curSysUser.getName());
+        log.setCnname(curSysUser.getCnname());
+        log.setActionType("客户删除");
+        String actionContent = "删除一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+        log.setActionContent(actionContent);
+        log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+        sysOperateLogDao.save(log);
     }
 
     @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
@@ -289,6 +324,95 @@ public class CompanyServiceImpl implements ICompanyService {
             return companyDao.findObjectsByConditionWithNoPage(whereHql, paramsList.toArray(), orderby);
         }
         return null;
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateNextTouchTime(Integer[] id, java.sql.Date next_touch_date) {
+        if (id != null && id.length > 0 && next_touch_date != null) {
+            for (int i = 0; i < id.length; i++) {
+                Company company = companyDao.findObjectById(id[i]);
+                if (company != null) {
+                    company.setNextTouchDate(next_touch_date);
+                    companyDao.update(company);
+                }
+            }
+        }
+    }
+
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void changeHandler(Integer[] id, Integer new_owner, SysUser curSysUser) {
+        if (id != null && id.length > 0 && new_owner != null) {
+            SysUser sysUser = sysUserDao.findObjectById(new_owner);
+            for (int i = 0; i < id.length; i++) {
+                Company company = companyDao.findObjectById(id[i]);
+                if (company != null && sysUser != null) {
+                    company.setSysUser(sysUser);
+                    company.setDispensePerson(sysUser.getCnname());
+                    company.setDispenseDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+                    companyDao.update(company);
+                    SysOperateLog log = new SysOperateLog();
+                    log.setUserName(curSysUser.getName());
+                    log.setCnname(curSysUser.getCnname());
+                    log.setActionType("客户转单");
+                    String actionContent = "转走一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+                    log.setActionContent(actionContent);
+                    log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+                    sysOperateLogDao.save(log);
+
+                }
+            }
+        }
+    }
+
+    /*资源客户升阶与日志*/
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateCompany1(SysUser curSysuser, Company company) {
+        companyDao.update(company);
+        SysOperateLog log = new SysOperateLog();
+        log.setUserName(curSysuser.getName());
+        log.setCnname(curSysuser.getCnname());
+        log.setActionType("资源客户转潜在");
+        String actionContent = "升阶一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+        log.setActionContent(actionContent);
+        log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+        sysOperateLogDao.save(log);
+    }
+/*潜在客户升阶与日志*/
+@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateCompany2(SysUser curSysuser, Company company) {
+    companyDao.update(company);
+    SysOperateLog log = new SysOperateLog();
+    log.setUserName(curSysuser.getName());
+    log.setCnname(curSysuser.getCnname());
+    log.setActionType("潜在客户转重要");
+    String actionContent = "升阶一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+    log.setActionContent(actionContent);
+    log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+    sysOperateLogDao.save(log);
+    }
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateCompany3(SysUser curSysuser, Company company) {
+        companyDao.update(company);
+        SysOperateLog log = new SysOperateLog();
+        log.setUserName(curSysuser.getName());
+        log.setCnname(curSysuser.getCnname());
+        log.setActionType("重要客户转正式");
+        String actionContent = "升阶一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+        log.setActionContent(actionContent);
+        log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+        sysOperateLogDao.save(log);
+    }
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED, readOnly = false)
+    public void updateCompany4(SysUser curSysuser, Company company) {
+        companyDao.update(company);
+        SysOperateLog log = new SysOperateLog();
+        log.setUserName(curSysuser.getName());
+        log.setCnname(curSysuser.getCnname());
+        log.setActionType("无效客户复活");
+        String actionContent = "复活一个客户信息[ID:" + company.getId() + ",客户名称:" + company.getName() + ",客户编码:" + company.getCode() + "]";
+        log.setActionContent(actionContent);
+        log.setActionDate(DateFormatUtils.format(new java.util.Date(), "yyyy-MM-dd HH:mm:ss"));
+        sysOperateLogDao.save(log);
     }
 }
 

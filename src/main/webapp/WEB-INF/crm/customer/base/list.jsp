@@ -167,7 +167,7 @@
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
             onClick="goChangePerson()">
-        <img src="${pageContext.request.contextPath}/ui/images/button/jinshourbg.png" border='0' align='absmiddle'>&nbsp;经手人变更
+        <img src="${pageContext.request.contextPath}/ui/images/button/jinshourbg.png" border='0' align='absmiddle'>&nbsp;转单
     </button>
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"

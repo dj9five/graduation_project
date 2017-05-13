@@ -105,39 +105,6 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>电话一：</td>
-                        <td><input name="tel1" type="text" id="tel1" value="" style="width:110px"></td>
-                        <td>客户等级：</td>
-                        <td>
-                            <s:if test="%{#request.gradesSelect!=null}">
-                                <s:select list="%{#request.gradesSelect}" id='grade' name='grade' cssStyle="width:110px"
-                                          listKey="value" listValue="value" headerKey="" headerValue="-------">
-                                </s:select>
-                            </s:if>
-                        </td>
-
-                        <td>客户来源：</td>
-                        <td>
-                            <s:if test="%{#request.sourcesSelect!=null}">
-                                <s:select list="%{#request.sourcesSelect}" id='source' name='source'
-                                          cssStyle="width:110px"
-                                          listKey="value" listValue="value" headerKey="" headerValue="-------">
-                                </s:select>
-                            </s:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>客户性质：</td>
-                        <td>
-                            <s:if test="%{#request.qualitySelect!=null}">
-                                <s:select list="%{#request.qualitySelect}" id='quality' name='quality'
-                                          cssStyle="width:110px"
-                                          listKey="value" listValue="value" headerKey="" headerValue="-------">
-                                </s:select>
-                            </s:if>
-                        </td>
-                    </tr>
                 </table>
             </s:form>
             <!-- 基本查询的表单结束 -->
@@ -156,7 +123,7 @@
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
             onClick="goChangePerson()">
-        <img src="${pageContext.request.contextPath}/ui/images/button/jinshourbg.png" border='0' align='absmiddle'>&nbsp;经手人变更
+        <img src="${pageContext.request.contextPath}/ui/images/button/jinshourbg.png" border='0' align='absmiddle'>&nbsp;转单
     </button>
 </div>
 <div class="border">

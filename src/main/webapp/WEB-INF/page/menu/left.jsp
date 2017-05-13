@@ -67,6 +67,10 @@
 								 height="17">
 							<a href="${pageContext.request.contextPath}/sys/sysRoleAction_list.do" target="rightFrame"
 							   style="color: #040205">操作权限</a></li>
+						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
+								 height="17">
+							<a href="${pageContext.request.contextPath}/crm/operateLogAction_list.do" target="rightFrame"
+							   style="color: #040205">操作日志</a></li>
 					</ul>
 				 </li>
 
@@ -75,12 +79,8 @@
 					<ul style="background: #1B7CD0">
 						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
 								 height="17">
-							<a href="${pageContext.request.contextPath}/report/xtsz1.jsp" target="rightFrame"
+							<a href="${pageContext.request.contextPath}/report/reportAction_khflfx.do" target="rightFrame"
 							   style="color: #040205">客户分类分析 </a></li>
-						<li><img src="${pageContext.request.contextPath}/ui/images/menu/xtsz1.png" width="17"
-								 height="17">
-							<a href="${pageContext.request.contextPath}/report/xtsz1.jsp" target="rightFrame"
-							   style="color: #040205">客户分析 </a></li>
 					</ul>
 				 </li>
 		</ul>
