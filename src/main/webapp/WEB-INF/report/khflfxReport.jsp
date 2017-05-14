@@ -36,7 +36,7 @@
 	<div class="tab-page" id="tabPage2">
 		<h2 class="tab">报表数据</h2>
         <div id="report">
-	        <div class="reportTitle">客户分类分析报表</div>
+	        <div class="reportTitle">客户报表分析</div>
 	             <table width="97%" border="1" cellspacing="0" cellpadding="0" class="reportTable">
 						<tr>
 							<td width="30%" class="thead">分类项目</td>

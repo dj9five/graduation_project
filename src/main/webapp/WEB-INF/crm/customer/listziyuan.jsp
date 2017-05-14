@@ -24,7 +24,25 @@
         window.location = strURL;
     }
 
-
+    function shengjie() {
+        var count = 0;
+        var ids = "";
+        $("input[type='checkbox'][name='ids']").each(function (index, data) {
+            if (this.checked) {
+                count++;
+                if (count == 1) {
+                    ids = $(this).val();
+                } else {
+                    ids = ids + "," + $(this).val();
+                }
+            }
+        });
+        if (count == 0) {
+            alert("必须有一个客户被选中!!!");
+            return false;
+        }
+        document.forms[1].submit()
+    }
     //处理客户共享
     function do_share() {
         var count = 0;
@@ -127,7 +145,7 @@
     </button>
     <button type='button' class='button' onMouseOver="this.className='button_over';"
             onMouseOut="this.className='button';"
-            onClick="document.forms[1].submit()">
+            onClick="shengjie()">
         <img src="${pageContext.request.contextPath}/ui/images/button/xiayibu.png" border='0' align='absmiddle'>&nbsp;升阶
     </button>
 </div>

@@ -205,7 +205,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             return "listziyuan";
 
         }
-        return "null";
+        return null;
     }
     /*潜在客户升阶*/
     public String advance_b(){
@@ -218,11 +218,11 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         CompanySearch companySearch = new CompanySearch();
 
         if (curSysuser != null) {
-            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            List<Company> companyList = companyService.findCompanysConditionqianzai(curSysuser, companySearch);
             request.setAttribute("companyList", companyList);
             return "listqianzai";
         }
-        return "null";
+        return null;
     }
     /*重要客户升阶*/
     public String advance_c(){
@@ -234,11 +234,11 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         companyService.updateCompany3(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
         if (curSysuser != null) {
-            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            List<Company> companyList = companyService.findCompanysConditionzhongyao(curSysuser, companySearch);
             request.setAttribute("companyList", companyList);
             return "listzhongyao";
         }
-        return "null";
+        return null;
     }
     /*无效客户复活*/
     public String advance_d(){
@@ -250,11 +250,11 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
         companyService.updateCompany4(curSysuser,company);
         CompanySearch companySearch = new CompanySearch();
         if (curSysuser != null) {
-            List<Company> companyList = companyService.findCompanysConditionSource(curSysuser, companySearch);
+            List<Company> companyList = companyService.findCompanysConditionwuxiao(curSysuser, companySearch);
             request.setAttribute("companyList", companyList);
             return "listwuxiao";
         }
-        return "null";
+        return null;
     }
      /*资源客户*/
     public String listziyuan() {
@@ -265,7 +265,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             request.setAttribute("companyList", companyList);
             return "listziyuan";
         }
-        return "null";
+        return null;
     }
     /*潜在客户*/
     public String listqianzai() {
@@ -276,7 +276,7 @@ public class CompanyAction extends BaseAction implements ModelDriven<CompanyForm
             request.setAttribute("companyList", companyList);
             return "listqianzai";
         }
-        return "null";
+        return null;
     }
     /*重要客户*/
     public String listzhongyao() {
